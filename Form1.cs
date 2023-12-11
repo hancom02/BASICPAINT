@@ -113,5 +113,80 @@ namespace BASICPAINT
         {
 
         }
+
+        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void panel_shape_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2ImageButton4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2ImageButton1_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2ImageButton1_Click_3(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt_size_plus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2PictureBox2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2PictureBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2ImageButton3_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lb_edit_colors_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip2_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

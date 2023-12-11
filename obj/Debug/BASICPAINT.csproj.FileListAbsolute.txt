@@ -1,24 +1,12 @@
-<<<<<<< HEAD
 D:\STUDY\HK7\LTTQ\BASICPAINT\bin\Debug\BASICPAINT.exe.config
 D:\STUDY\HK7\LTTQ\BASICPAINT\bin\Debug\BASICPAINT.exe
 D:\STUDY\HK7\LTTQ\BASICPAINT\bin\Debug\BASICPAINT.pdb
+D:\STUDY\HK7\LTTQ\BASICPAINT\bin\Debug\Guna.UI2.dll
 D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.csproj.AssemblyReference.cache
 D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.Form1.resources
 D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.Properties.Resources.resources
 D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.csproj.GenerateResource.cache
 D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.csproj.CoreCompileInputs.cache
+D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.csproj.CopyComplete
 D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.exe
 D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.pdb
-D:\STUDY\HK7\LTTQ\BASICPAINT\bin\Debug\Guna.UI2.dll
-D:\STUDY\HK7\LTTQ\BASICPAINT\obj\Debug\BASICPAINT.csproj.CopyComplete
-=======
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\bin\Debug\BASICPAINT.exe.config
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\bin\Debug\BASICPAINT.exe
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\bin\Debug\BASICPAINT.pdb
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.csproj.AssemblyReference.cache
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.Properties.Resources.resources
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.csproj.GenerateResource.cache
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.csproj.CoreCompileInputs.cache
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.exe
-C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.pdb
->>>>>>> 4fd3aa355c3fba00d98208bc915f2516c45e9392
