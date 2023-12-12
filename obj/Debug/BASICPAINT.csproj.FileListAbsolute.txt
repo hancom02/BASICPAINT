@@ -1,0 +1,10 @@
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\bin\Debug\BASICPAINT.exe.config
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\bin\Debug\BASICPAINT.exe
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\bin\Debug\BASICPAINT.pdb
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.csproj.AssemblyReference.cache
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.Form1.resources
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.Properties.Resources.resources
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.csproj.GenerateResource.cache
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.csproj.CoreCompileInputs.cache
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.exe
+C:\Users\MODERN\Documents\BASICPAINT\BASICPAINT\obj\Debug\BASICPAINT.pdb
