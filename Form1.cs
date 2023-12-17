@@ -12,6 +12,32 @@ namespace BASICPAINT
 {
     public partial class Form1 : Form
     {
+        private Point Start, End;
+        private List<Triangle> trianglesList;
+        Bitmap bm;
+        Graphics g;
+        bool isDrawing = false;
+        Point px, py;
+        Pen pen = new Pen(Color.Black, 1);
+        Pen erase = new Pen(Color.White, 10);
+        int x, y, sX, sY, cX, cY;
+
+        ColorDialog cd = new ColorDialog();
+        Color New_Color;
+        //Point lastPoint;
+        public enum TOOL
+        {
+            SELECT,
+            PEN,
+            ERASER,
+            FILLCOLOR,
+            LINE,
+            ELLIPSE,
+            RECTANGLE,
+            TRIANGLE
+        }
+        public TOOL curTool = TOOL.SELECT;
+
         public Form1()
         {
             InitializeComponent();

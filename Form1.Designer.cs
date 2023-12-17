@@ -122,7 +122,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1050, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1050, 36);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -275,7 +275,7 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 33);
+            this.panel_chung.Location = new System.Drawing.Point(0, 36);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1050, 107);
             this.panel_chung.TabIndex = 6;
@@ -676,7 +676,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(0, 146);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1050, 380);
+            this.pictureBox1.Size = new System.Drawing.Size(1050, 388);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
