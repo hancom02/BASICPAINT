@@ -276,6 +276,42 @@ namespace BASICPAINT
             }
         }
 
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            if (isDrawing)
+            {
+                if (curTool == TOOL.ELLIPSE)
+                {
+                    g.DrawEllipse(pen, cX, cY, sX, sY);
+
+                }
+                if (curTool == TOOL.RECTANGLE)
+                {
+                    g.DrawRectangle(pen, cX, cY, sX, sY);
+                }
+                if (curTool == TOOL.LINE)
+                {
+                    g.DrawLine(pen, cX, cY, x, y);
+                }
+                if (curTool == TOOL.TRIANGLE)
+                {
+                    //End = PointToClient(MousePosition);
+                    //Triangle triangle = new Triangle(Start, End);
+                    //triangle.Draw(g, pen);
+                    Point point1 = Start;
+                    Point point2 = new Point((Start.X + End.X) / 2, End.Y);
+                    Point point3 = End;
+                    g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
+                }
+            }
+            //foreach (var triangle in trianglesList)
+            //{
+            //    triangle.Draw(g, pen);
+            //}
+        }
+
         private void guna2ImageButton2_Click_1(object sender, EventArgs e)
         {
             curTool = TOOL.TRIANGLE;
