@@ -41,6 +41,18 @@ namespace BASICPAINT
         public Form1()
         {
             InitializeComponent();
+
+            DoubleBuffered = true;
+            g = pictureBox1.CreateGraphics();
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            pen.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+            bm = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            g = Graphics.FromImage(bm);
+            g.Clear(Color.White);
+            pictureBox1.Image = bm;
+            trianglesList = new List<Triangle>();
+            //pen.Width = (float)pen_width.Value;
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,7 +129,7 @@ namespace BASICPAINT
 
         private void guna2ImageButton1_Click(object sender, EventArgs e)
         {
-
+            curTool = TOOL.PEN;
         }
 
         private void guna2PictureBox2_Click(object sender, EventArgs e)
@@ -178,6 +190,17 @@ namespace BASICPAINT
         private void bt_size_plus_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDrawing = true;
+            Start = End = e.Location;
+            //lastPoint = e.Location;
+            py = e.Location;
+
+            cX = e.X;
+            cY = e.Y;
         }
 
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
