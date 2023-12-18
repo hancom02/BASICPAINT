@@ -129,18 +129,15 @@ namespace BASICPAINT
 
         private void guna2ImageButton1_Click(object sender, EventArgs e)
         {
-            curTool = TOOL.PEN;
+            curTool = TOOL.LINE;
         }
 
         private void guna2PictureBox2_Click(object sender, EventArgs e)
         {
-
+            
         }
 
-        private void guna2ImageButton1_Click_1(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void guna2ImageButton2_Click(object sender, EventArgs e)
         {
@@ -169,7 +166,7 @@ namespace BASICPAINT
 
         private void guna2ImageButton4_Click(object sender, EventArgs e)
         {
-
+            curTool = TOOL.ELLIPSE;
         }
 
         private void guna2Panel3_Paint(object sender, PaintEventArgs e)
@@ -179,7 +176,7 @@ namespace BASICPAINT
 
         private void guna2ImageButton1_Click_2(object sender, EventArgs e)
         {
-
+            curTool = TOOL.RECTANGLE;
         }
 
         private void guna2ImageButton1_Click_3(object sender, EventArgs e)
@@ -242,12 +239,54 @@ namespace BASICPAINT
             sX = e.X - cX;
             sY = e.Y - cY;
 
-            
-            
-            
-                label1.Text =  e.X + "," + e.Y;
+            label1.Text =  e.X + "," + e.Y;
             
         }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDrawing = false;
+
+            sX = x - cX;
+            sY = y - cY;
+
+            if (curTool == TOOL.ELLIPSE)
+            {
+                g.DrawEllipse(pen, cX, cY, sX, sY);
+            }
+            if (curTool == TOOL.RECTANGLE)
+            {
+                g.DrawRectangle(pen, cX, cY, sX, sY);
+            }
+            if (curTool == TOOL.LINE)
+            {
+                g.DrawLine(pen, cX, cY, x, y);
+            }
+            if (curTool == TOOL.TRIANGLE)
+            {
+                //Triangle triangle = new Triangle(Start, End);
+                //trianglesList.Add(triangle);
+                //Invalidate();
+                End = e.Location;
+                this.Invalidate();
+                Point point1 = Start;
+                Point point2 = new Point((Start.X + End.X) / 2, End.Y);
+                Point point3 = End;
+                g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
+            }
+        }
+
+        private void guna2ImageButton2_Click_1(object sender, EventArgs e)
+        {
+            curTool = TOOL.TRIANGLE;
+        }
+
+        private void bt_pencil_Click(object sender, EventArgs e)
+        {
+            curTool = TOOL.PEN;
+        }
+
+        
 
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
         {

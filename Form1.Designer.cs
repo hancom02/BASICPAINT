@@ -427,6 +427,7 @@
             this.guna2ImageButton2.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.guna2ImageButton2.Size = new System.Drawing.Size(30, 30);
             this.guna2ImageButton2.TabIndex = 4;
+            this.guna2ImageButton2.Click += new System.EventHandler(this.guna2ImageButton2_Click_1);
             // 
             // guna2ImageButton1
             // 
@@ -441,7 +442,7 @@
             this.guna2ImageButton1.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.guna2ImageButton1.Size = new System.Drawing.Size(30, 30);
             this.guna2ImageButton1.TabIndex = 3;
-            this.guna2ImageButton1.Click += new System.EventHandler(this.guna2ImageButton1_Click_3);
+            this.guna2ImageButton1.Click += new System.EventHandler(this.guna2ImageButton1_Click);
             // 
             // bt_square
             // 
@@ -546,7 +547,7 @@
             this.bt_fill.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.bt_fill.Size = new System.Drawing.Size(30, 30);
             this.bt_fill.TabIndex = 3;
-            this.bt_fill.Click += new System.EventHandler(this.guna2ImageButton1_Click_1);
+            this.bt_fill.Click += new System.EventHandler(this.guna2PictureBox2_Click);
             // 
             // guna2PictureBox3
             // 
@@ -571,7 +572,7 @@
             this.bt_pencil.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.bt_pencil.Size = new System.Drawing.Size(30, 30);
             this.bt_pencil.TabIndex = 0;
-            this.bt_pencil.Click += new System.EventHandler(this.guna2ImageButton1_Click);
+            this.bt_pencil.Click += new System.EventHandler(this.bt_pencil_Click);
             // 
             // panel_select
             // 
@@ -681,6 +682,7 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
             // Form1
             // 
