@@ -52,7 +52,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel_size = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pic_color = new Guna.UI2.WinForms.Guna2PictureBox();
             this.bt_size_plus = new System.Windows.Forms.Button();
             this.bt_size_reduce = new System.Windows.Forms.Button();
             this.tb_size = new Guna.UI2.WinForms.Guna2TextBox();
@@ -64,6 +64,8 @@
             this.bt_elip = new Guna.UI2.WinForms.Guna2ImageButton();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.panel_brush = new Guna.UI2.WinForms.Guna2Panel();
+            this.cb_brush = new System.Windows.Forms.ComboBox();
+            this.pb_brush = new Guna.UI2.WinForms.Guna2PictureBox();
             this.panel_tool = new Guna.UI2.WinForms.Guna2Panel();
             this.bt_eriser = new Guna.UI2.WinForms.Guna2ImageButton();
             this.bt_text = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -71,15 +73,18 @@
             this.guna2PictureBox3 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.bt_pencil = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel_select = new Guna.UI2.WinForms.Guna2Panel();
+            this.cb_rotate = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2ImageButton4 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel_color_picker = new Guna.UI2.WinForms.Guna2Panel();
             this.lb_editecolor_2 = new System.Windows.Forms.Label();
             this.lb_edit_colors = new System.Windows.Forms.Label();
-            this.guna2ImageButton3 = new Guna.UI2.WinForms.Guna2ImageButton();
-            this.guna2PictureBox4 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.btn_color_dialog = new Guna.UI2.WinForms.Guna2ImageButton();
+            this.pb_color = new Guna.UI2.WinForms.Guna2PictureBox();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.fontDialog2 = new System.Windows.Forms.FontDialog();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.guna2ComboBox1 = new Guna.UI2.WinForms.Guna2ComboBox();
             this.menuStrip1.SuspendLayout();
             this.panelZoom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
@@ -87,14 +92,17 @@
             this.guna2Panel1.SuspendLayout();
             this.panel_chung.SuspendLayout();
             this.panel_size.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
             this.panel_shape.SuspendLayout();
             this.panel_shape_sub.SuspendLayout();
+            this.panel_brush.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_brush)).BeginInit();
             this.panel_tool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).BeginInit();
             this.panel_select.SuspendLayout();
             this.panel_color_picker.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_color)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelView
@@ -119,7 +127,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1050, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1050, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -131,7 +139,7 @@
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 26);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
@@ -272,7 +280,7 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 30);
+            this.panel_chung.Location = new System.Drawing.Point(0, 28);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1050, 107);
             this.panel_chung.TabIndex = 6;
@@ -328,7 +336,7 @@
             // 
             this.panel_size.BorderColor = System.Drawing.Color.Gainsboro;
             this.panel_size.BorderThickness = 1;
-            this.panel_size.Controls.Add(this.guna2PictureBox2);
+            this.panel_size.Controls.Add(this.pic_color);
             this.panel_size.Controls.Add(this.bt_size_plus);
             this.panel_size.Controls.Add(this.bt_size_reduce);
             this.panel_size.Controls.Add(this.tb_size);
@@ -337,15 +345,16 @@
             this.panel_size.Size = new System.Drawing.Size(108, 82);
             this.panel_size.TabIndex = 5;
             // 
-            // guna2PictureBox2
+            // pic_color
             // 
-            this.guna2PictureBox2.ImageRotate = 0F;
-            this.guna2PictureBox2.Location = new System.Drawing.Point(34, 9);
-            this.guna2PictureBox2.Name = "guna2PictureBox2";
-            this.guna2PictureBox2.Size = new System.Drawing.Size(40, 40);
-            this.guna2PictureBox2.TabIndex = 3;
-            this.guna2PictureBox2.TabStop = false;
-            this.guna2PictureBox2.Click += new System.EventHandler(this.guna2PictureBox2_Click_1);
+            this.pic_color.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pic_color.ImageRotate = 0F;
+            this.pic_color.Location = new System.Drawing.Point(34, 9);
+            this.pic_color.Name = "pic_color";
+            this.pic_color.Size = new System.Drawing.Size(40, 40);
+            this.pic_color.TabIndex = 3;
+            this.pic_color.TabStop = false;
+            this.pic_color.Click += new System.EventHandler(this.guna2PictureBox2_Click_1);
             // 
             // bt_size_plus
             // 
@@ -424,6 +433,7 @@
             this.guna2ImageButton2.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.guna2ImageButton2.Size = new System.Drawing.Size(30, 30);
             this.guna2ImageButton2.TabIndex = 4;
+            this.guna2ImageButton2.Click += new System.EventHandler(this.guna2ImageButton2_Click_1);
             // 
             // guna2ImageButton1
             // 
@@ -438,7 +448,7 @@
             this.guna2ImageButton1.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.guna2ImageButton1.Size = new System.Drawing.Size(30, 30);
             this.guna2ImageButton1.TabIndex = 3;
-            this.guna2ImageButton1.Click += new System.EventHandler(this.guna2ImageButton1_Click_3);
+            this.guna2ImageButton1.Click += new System.EventHandler(this.guna2ImageButton1_Click);
             // 
             // bt_square
             // 
@@ -481,10 +491,36 @@
             // 
             this.panel_brush.BorderColor = System.Drawing.Color.Gainsboro;
             this.panel_brush.BorderThickness = 1;
+            this.panel_brush.Controls.Add(this.cb_brush);
+            this.panel_brush.Controls.Add(this.pb_brush);
             this.panel_brush.Location = new System.Drawing.Point(255, 0);
             this.panel_brush.Name = "panel_brush";
             this.panel_brush.Size = new System.Drawing.Size(71, 82);
             this.panel_brush.TabIndex = 3;
+            // 
+            // cb_brush
+            // 
+            this.cb_brush.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_brush.FormattingEnabled = true;
+            this.cb_brush.Items.AddRange(new object[] {
+            "Oil ",
+            "Water color"});
+            this.cb_brush.Location = new System.Drawing.Point(3, 52);
+            this.cb_brush.Name = "cb_brush";
+            this.cb_brush.Size = new System.Drawing.Size(64, 24);
+            this.cb_brush.TabIndex = 2;
+            this.cb_brush.Text = "Brush";
+            // 
+            // pb_brush
+            // 
+            this.pb_brush.Image = ((System.Drawing.Image)(resources.GetObject("pb_brush.Image")));
+            this.pb_brush.ImageRotate = 0F;
+            this.pb_brush.Location = new System.Drawing.Point(18, 9);
+            this.pb_brush.Name = "pb_brush";
+            this.pb_brush.Size = new System.Drawing.Size(30, 40);
+            this.pb_brush.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pb_brush.TabIndex = 1;
+            this.pb_brush.TabStop = false;
             // 
             // panel_tool
             // 
@@ -543,7 +579,7 @@
             this.bt_fill.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.bt_fill.Size = new System.Drawing.Size(30, 30);
             this.bt_fill.TabIndex = 3;
-            this.bt_fill.Click += new System.EventHandler(this.guna2ImageButton1_Click_1);
+            this.bt_fill.Click += new System.EventHandler(this.guna2PictureBox2_Click);
             // 
             // guna2PictureBox3
             // 
@@ -568,18 +604,35 @@
             this.bt_pencil.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.bt_pencil.Size = new System.Drawing.Size(30, 30);
             this.bt_pencil.TabIndex = 0;
-            this.bt_pencil.Click += new System.EventHandler(this.guna2ImageButton1_Click);
+            this.bt_pencil.Click += new System.EventHandler(this.bt_pencil_Click);
             // 
             // panel_select
             // 
             this.panel_select.BorderColor = System.Drawing.Color.Gainsboro;
             this.panel_select.BorderThickness = 1;
+            this.panel_select.Controls.Add(this.cb_rotate);
             this.panel_select.Controls.Add(this.label6);
             this.panel_select.Controls.Add(this.guna2ImageButton4);
             this.panel_select.Location = new System.Drawing.Point(2, 0);
             this.panel_select.Name = "panel_select";
             this.panel_select.Size = new System.Drawing.Size(130, 81);
             this.panel_select.TabIndex = 1;
+            // 
+            // cb_rotate
+            // 
+            this.cb_rotate.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_rotate.FormattingEnabled = true;
+            this.cb_rotate.Items.AddRange(new object[] {
+            "Rotate right 90",
+            "Rotate left 90",
+            "Rotate 180",
+            "Flip horizontal",
+            "Flip vertical"});
+            this.cb_rotate.Location = new System.Drawing.Point(54, 52);
+            this.cb_rotate.Name = "cb_rotate";
+            this.cb_rotate.Size = new System.Drawing.Size(68, 24);
+            this.cb_rotate.TabIndex = 2;
+            this.cb_rotate.Text = "Rotate";
             // 
             // label6
             // 
@@ -612,8 +665,8 @@
             this.panel_color_picker.BorderThickness = 1;
             this.panel_color_picker.Controls.Add(this.lb_editecolor_2);
             this.panel_color_picker.Controls.Add(this.lb_edit_colors);
-            this.panel_color_picker.Controls.Add(this.guna2ImageButton3);
-            this.panel_color_picker.Controls.Add(this.guna2PictureBox4);
+            this.panel_color_picker.Controls.Add(this.btn_color_dialog);
+            this.panel_color_picker.Controls.Add(this.pb_color);
             this.panel_color_picker.Location = new System.Drawing.Point(631, 0);
             this.panel_color_picker.Name = "panel_color_picker";
             this.panel_color_picker.Size = new System.Drawing.Size(416, 82);
@@ -642,32 +695,60 @@
             this.lb_edit_colors.Text = "Edit";
             this.lb_edit_colors.Click += new System.EventHandler(this.lb_edit_colors_Click);
             // 
-            // guna2ImageButton3
+            // btn_color_dialog
             // 
-            this.guna2ImageButton3.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.guna2ImageButton3.HoverState.ImageSize = new System.Drawing.Size(64, 64);
-            this.guna2ImageButton3.Image = ((System.Drawing.Image)(resources.GetObject("guna2ImageButton3.Image")));
-            this.guna2ImageButton3.ImageOffset = new System.Drawing.Point(0, 0);
-            this.guna2ImageButton3.ImageRotate = 0F;
-            this.guna2ImageButton3.ImageSize = new System.Drawing.Size(35, 35);
-            this.guna2ImageButton3.Location = new System.Drawing.Point(252, 9);
-            this.guna2ImageButton3.Name = "guna2ImageButton3";
-            this.guna2ImageButton3.PressedState.ImageSize = new System.Drawing.Size(64, 64);
-            this.guna2ImageButton3.Size = new System.Drawing.Size(35, 35);
-            this.guna2ImageButton3.TabIndex = 1;
-            this.guna2ImageButton3.Click += new System.EventHandler(this.guna2ImageButton3_Click_1);
+            this.btn_color_dialog.CheckedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.btn_color_dialog.HoverState.ImageSize = new System.Drawing.Size(64, 64);
+            this.btn_color_dialog.Image = ((System.Drawing.Image)(resources.GetObject("btn_color_dialog.Image")));
+            this.btn_color_dialog.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btn_color_dialog.ImageRotate = 0F;
+            this.btn_color_dialog.ImageSize = new System.Drawing.Size(35, 35);
+            this.btn_color_dialog.Location = new System.Drawing.Point(252, 9);
+            this.btn_color_dialog.Name = "btn_color_dialog";
+            this.btn_color_dialog.PressedState.ImageSize = new System.Drawing.Size(64, 64);
+            this.btn_color_dialog.Size = new System.Drawing.Size(35, 35);
+            this.btn_color_dialog.TabIndex = 1;
+            this.btn_color_dialog.Click += new System.EventHandler(this.btn_color_dialog_Click);
             // 
-            // guna2PictureBox4
+            // pb_color
             // 
-            this.guna2PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("guna2PictureBox4.Image")));
-            this.guna2PictureBox4.ImageRotate = 0F;
-            this.guna2PictureBox4.Location = new System.Drawing.Point(3, 0);
-            this.guna2PictureBox4.Name = "guna2PictureBox4";
-            this.guna2PictureBox4.Size = new System.Drawing.Size(240, 81);
-            this.guna2PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.guna2PictureBox4.TabIndex = 0;
-            this.guna2PictureBox4.TabStop = false;
-            this.guna2PictureBox4.Click += new System.EventHandler(this.guna2PictureBox4_Click);
+            this.pb_color.Image = ((System.Drawing.Image)(resources.GetObject("pb_color.Image")));
+            this.pb_color.ImageRotate = 0F;
+            this.pb_color.Location = new System.Drawing.Point(3, 0);
+            this.pb_color.Name = "pb_color";
+            this.pb_color.Size = new System.Drawing.Size(240, 81);
+            this.pb_color.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_color.TabIndex = 0;
+            this.pb_color.TabStop = false;
+            this.pb_color.Click += new System.EventHandler(this.guna2PictureBox4_Click);
+            this.pb_color.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pb_color_MouseClick);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 146);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1050, 388);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            // 
+            // guna2ComboBox1
+            // 
+            this.guna2ComboBox1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.guna2ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.guna2ComboBox1.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2ComboBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2ComboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.guna2ComboBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+            this.guna2ComboBox1.ItemHeight = 30;
+            this.guna2ComboBox1.Location = new System.Drawing.Point(263, 146);
+            this.guna2ComboBox1.Name = "guna2ComboBox1";
+            this.guna2ComboBox1.Size = new System.Drawing.Size(50, 36);
+            this.guna2ComboBox1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -675,6 +756,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1050, 562);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.guna2ComboBox1);
             this.Controls.Add(this.panel_chung);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.panel2);
@@ -699,16 +782,19 @@
             this.panel_chung.ResumeLayout(false);
             this.panel_chung.PerformLayout();
             this.panel_size.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_color)).EndInit();
             this.panel_shape.ResumeLayout(false);
             this.panel_shape_sub.ResumeLayout(false);
+            this.panel_brush.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_brush)).EndInit();
             this.panel_tool.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox3)).EndInit();
             this.panel_select.ResumeLayout(false);
             this.panel_select.PerformLayout();
             this.panel_color_picker.ResumeLayout(false);
             this.panel_color_picker.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_color)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -756,16 +842,21 @@
         private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton2;
         private Guna.UI2.WinForms.Guna2TextBox tb_size;
         private System.Windows.Forms.Button bt_size_plus;
-        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox2;
+        private Guna.UI2.WinForms.Guna2PictureBox pic_color;
         private System.Windows.Forms.Label lb_edit_colors;
-        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton3;
+        private Guna.UI2.WinForms.Guna2ImageButton btn_color_dialog;
         private System.Windows.Forms.Label lb_editecolor_2;
         private System.Windows.Forms.Label label6;
         private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton4;
         private System.Windows.Forms.Button bt_size_reduce;
-        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox4;
+        private Guna.UI2.WinForms.Guna2PictureBox pb_color;
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.FontDialog fontDialog2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ComboBox cb_rotate;
+        private Guna.UI2.WinForms.Guna2PictureBox pb_brush;
+        private Guna.UI2.WinForms.Guna2ComboBox guna2ComboBox1;
+        private System.Windows.Forms.ComboBox cb_brush;
     }
 }
 
