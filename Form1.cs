@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -347,7 +348,22 @@ namespace BASICPAINT
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            if (pictureBox1.Image != null)
+            {
+                var sdf = new SaveFileDialog();
+                sdf.Filter = "Image(*.png)|*.png";
+                if (sdf.ShowDialog() == DialogResult.OK)
+                {
+                    Bitmap btm = bm.Clone(new Rectangle(0, 0,pictureBox1.Width, pictureBox1.Height), bm.PixelFormat);
+                    btm.Save(sdf.FileName, ImageFormat.Png);
+                    MessageBox.Show("Image Saved Sucessully");
+                }
+                else if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Draw Something First");
+                }
+            }
+
         }
 
         private void tb_size_TextChanged(object sender, EventArgs e)
