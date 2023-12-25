@@ -377,6 +377,23 @@ namespace BASICPAINT
             tb_size.Text = pen.Width.ToString();
         }
 
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "Do you want to save currrent drawing?";
+            string title = "Close Window";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                saveToolStripMenuItem.PerformClick();
+            }
+           
+                g.Clear(Color.White);
+                pictureBox1.Image = bm;
+                curTool = TOOL.SELECT;
+            
+        }
+
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
         {
 
