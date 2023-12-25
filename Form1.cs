@@ -394,6 +394,17 @@ namespace BASICPAINT
             
         }
 
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.ImageLocation = ofd.FileName;
+            }
+        }
+
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
         {
 
