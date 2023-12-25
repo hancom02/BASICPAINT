@@ -53,6 +53,7 @@ namespace BASICPAINT
             pictureBox1.Image = bm;
             trianglesList = new List<Triangle>();
             //pen.Width = (float)pen_width.Value;
+            tb_size.Text = pen.Width.ToString();
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -186,7 +187,8 @@ namespace BASICPAINT
 
         private void bt_size_plus_Click(object sender, EventArgs e)
         {
-
+            pen.Width = pen.Width + 1;
+            tb_size.Text = pen.Width.ToString();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -341,6 +343,22 @@ namespace BASICPAINT
             new_color = cd.Color;
             pic_color.FillColor = cd.Color;
             pen.Color = cd.Color;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void tb_size_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void bt_size_reduce_Click(object sender, EventArgs e)
+        {
+            pen.Width = pen.Width - 1;
+            tb_size.Text = pen.Width.ToString();
         }
 
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)

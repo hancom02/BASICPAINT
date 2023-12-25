@@ -121,13 +121,14 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1050, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1050, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -139,31 +140,32 @@
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // panelZoom
@@ -189,7 +191,7 @@
             this.labelZoomPercent.ForeColor = System.Drawing.Color.Black;
             this.labelZoomPercent.Location = new System.Drawing.Point(35, 8);
             this.labelZoomPercent.Name = "labelZoomPercent";
-            this.labelZoomPercent.Size = new System.Drawing.Size(37, 18);
+            this.labelZoomPercent.Size = new System.Drawing.Size(46, 22);
             this.labelZoomPercent.TabIndex = 3;
             this.labelZoomPercent.Text = "20%";
             // 
@@ -215,7 +217,7 @@
             // 
             this.trackBarZoom.Location = new System.Drawing.Point(104, 3);
             this.trackBarZoom.Name = "trackBarZoom";
-            this.trackBarZoom.Size = new System.Drawing.Size(131, 56);
+            this.trackBarZoom.Size = new System.Drawing.Size(131, 69);
             this.trackBarZoom.TabIndex = 0;
             this.trackBarZoom.Value = 10;
             // 
@@ -245,7 +247,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(39, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 16);
+            this.label1.Size = new System.Drawing.Size(96, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "1222 x 1222";
             // 
@@ -280,7 +282,7 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 28);
+            this.panel_chung.Location = new System.Drawing.Point(0, 33);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1050, 107);
             this.panel_chung.TabIndex = 6;
@@ -292,7 +294,7 @@
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(828, 89);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 16);
+            this.label5.Size = new System.Drawing.Size(54, 20);
             this.label5.TabIndex = 9;
             this.label5.Text = "Colors";
             this.label5.Click += new System.EventHandler(this.label5_Click);
@@ -304,7 +306,7 @@
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(394, 89);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 16);
+            this.label4.Size = new System.Drawing.Size(64, 20);
             this.label4.TabIndex = 8;
             this.label4.Text = "Shapes";
             // 
@@ -315,7 +317,7 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(168, 89);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 16);
+            this.label3.Size = new System.Drawing.Size(47, 20);
             this.label3.TabIndex = 7;
             this.label3.Text = "Tools";
             this.label3.Click += new System.EventHandler(this.label3_Click);
@@ -327,7 +329,7 @@
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(33, 89);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 16);
+            this.label2.Size = new System.Drawing.Size(54, 20);
             this.label2.TabIndex = 6;
             this.label2.Text = "Image";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -374,6 +376,7 @@
             this.bt_size_reduce.TabIndex = 1;
             this.bt_size_reduce.Text = "-";
             this.bt_size_reduce.UseVisualStyleBackColor = true;
+            this.bt_size_reduce.Click += new System.EventHandler(this.bt_size_reduce_Click);
             // 
             // tb_size
             // 
@@ -394,6 +397,8 @@
             this.tb_size.SelectedText = "";
             this.tb_size.Size = new System.Drawing.Size(40, 20);
             this.tb_size.TabIndex = 0;
+            this.tb_size.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tb_size.TextChanged += new System.EventHandler(this.tb_size_TextChanged);
             // 
             // panel_shape
             // 
@@ -507,7 +512,7 @@
             "Water color"});
             this.cb_brush.Location = new System.Drawing.Point(3, 52);
             this.cb_brush.Name = "cb_brush";
-            this.cb_brush.Size = new System.Drawing.Size(64, 24);
+            this.cb_brush.Size = new System.Drawing.Size(64, 28);
             this.cb_brush.TabIndex = 2;
             this.cb_brush.Text = "Brush";
             // 
@@ -630,7 +635,7 @@
             "Flip vertical"});
             this.cb_rotate.Location = new System.Drawing.Point(54, 52);
             this.cb_rotate.Name = "cb_rotate";
-            this.cb_rotate.Size = new System.Drawing.Size(68, 24);
+            this.cb_rotate.Size = new System.Drawing.Size(68, 28);
             this.cb_rotate.TabIndex = 2;
             this.cb_rotate.Text = "Rotate";
             // 
@@ -641,7 +646,7 @@
             this.label6.ForeColor = System.Drawing.Color.Black;
             this.label6.Location = new System.Drawing.Point(3, 49);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 16);
+            this.label6.Size = new System.Drawing.Size(54, 20);
             this.label6.TabIndex = 1;
             this.label6.Text = "Select";
             // 
@@ -679,7 +684,7 @@
             this.lb_editecolor_2.ForeColor = System.Drawing.Color.Black;
             this.lb_editecolor_2.Location = new System.Drawing.Point(249, 60);
             this.lb_editecolor_2.Name = "lb_editecolor_2";
-            this.lb_editecolor_2.Size = new System.Drawing.Size(44, 16);
+            this.lb_editecolor_2.Size = new System.Drawing.Size(51, 20);
             this.lb_editecolor_2.TabIndex = 3;
             this.lb_editecolor_2.Text = "colors";
             // 
@@ -690,7 +695,7 @@
             this.lb_edit_colors.ForeColor = System.Drawing.Color.Black;
             this.lb_edit_colors.Location = new System.Drawing.Point(249, 47);
             this.lb_edit_colors.Name = "lb_edit_colors";
-            this.lb_edit_colors.Size = new System.Drawing.Size(30, 16);
+            this.lb_edit_colors.Size = new System.Drawing.Size(37, 20);
             this.lb_edit_colors.TabIndex = 2;
             this.lb_edit_colors.Text = "Edit";
             this.lb_edit_colors.Click += new System.EventHandler(this.lb_edit_colors_Click);
@@ -752,7 +757,7 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1050, 562);
