@@ -405,6 +405,19 @@ namespace BASICPAINT
             }
         }
 
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "Do you want to save currrent drawing?";
+            string title = "Close Window";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                saveToolStripMenuItem.PerformClick();
+            }
+            Application.Exit();
+        }
+
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
         {
 
