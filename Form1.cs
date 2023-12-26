@@ -407,6 +407,14 @@ namespace BASICPAINT
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Form1.ActiveForm.Close();
+        }
+
+        
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
             string message = "Do you want to save currrent drawing?";
             string title = "Close Window";
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
