@@ -55,6 +55,7 @@ namespace BASICPAINT
             trianglesList = new List<Triangle>();
             //pen.Width = (float)pen_width.Value;
             tb_size.Text = pen.Width.ToString();
+            
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -136,7 +137,7 @@ namespace BASICPAINT
 
         private void guna2PictureBox2_Click(object sender, EventArgs e)
         {
-            
+            curTool = TOOL.FILLCOLOR;
         }
 
         
@@ -424,6 +425,52 @@ namespace BASICPAINT
                 saveToolStripMenuItem.PerformClick();
             }
             Application.Exit();
+        }
+
+        static Point set_Point(PictureBox pb, Point pt)
+        {
+            float px = 1f * pb.Width / pb.Width;
+            float py = 1f * pb.Height / pb.Height;
+            return new Point((int)(pt.X * px), (int)(pt.Y * py));
+        }
+        private void Validate(Bitmap bm, Stack<Point> sp, int x, int y, Color Old_Color, Color New_Color)
+        {
+            Color cx = bm.GetPixel(x, y);
+            if (cx == Old_Color)
+            {
+                sp.Push(new Point(x, y));
+                bm.SetPixel(x, y, New_Color);
+            }
+        }
+
+        public void Fill(Bitmap bm, int x, int y, Color New_Clr)
+        {
+            Color Old_Color = bm.GetPixel(x, y);
+            Stack<Point> pixel = new Stack<Point>();
+            pixel.Push(new Point(x, y));
+            bm.SetPixel(x, y, New_Clr);
+            if (Old_Color == New_Clr) { return; }
+
+            while (pixel.Count > 0)
+            {
+                Point pt = (Point)pixel.Pop();
+                if (pt.X > 0 && pt.Y > 0 && pt.X < bm.Width - 1 && pt.Y < bm.Height - 1)
+                {
+                    Validate(bm, pixel, pt.X - 1, pt.Y, Old_Color, New_Clr);
+                    Validate(bm, pixel, pt.X, pt.Y - 1, Old_Color, New_Clr);
+                    Validate(bm, pixel, pt.X + 1, pt.Y, Old_Color, New_Clr);
+                    Validate(bm, pixel, pt.X, pt.Y + 1, Old_Color, New_Clr);
+                }
+            }
+        }
+
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (curTool == TOOL.FILLCOLOR)
+            {
+                Point point = set_Point(pictureBox1, e.Location);
+                Fill(bm, point.X, point.Y, new_color);
+            }
         }
 
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
