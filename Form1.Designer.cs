@@ -38,15 +38,22 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelZoom = new Guna.UI2.WinForms.Guna2Panel();
-            this.labelZoomPercent = new System.Windows.Forms.Label();
             this.bt_zoom_plus = new System.Windows.Forms.Button();
             this.bt_zoom_reduce = new System.Windows.Forms.Button();
             this.trackBarZoom = new System.Windows.Forms.TrackBar();
+            this.labelZoomPercent = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.panel_chung = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.richTB_text = new System.Windows.Forms.RichTextBox();
+            this.btn_underline = new System.Windows.Forms.Button();
+            this.btn_I = new System.Windows.Forms.Button();
+            this.btn_Bold = new System.Windows.Forms.Button();
+            this.cb_TextSize = new System.Windows.Forms.ComboBox();
+            this.cb_Font = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -84,20 +91,14 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.fontDialog2 = new System.Windows.Forms.FontDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.guna2ComboBox1 = new Guna.UI2.WinForms.Guna2ComboBox();
-            this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
-            this.cb_Font = new System.Windows.Forms.ComboBox();
-            this.cb_TextSize = new System.Windows.Forms.ComboBox();
-            this.btn_Bold = new System.Windows.Forms.Button();
-            this.btn_I = new System.Windows.Forms.Button();
-            this.btn_underline = new System.Windows.Forms.Button();
-            this.richTB_text = new System.Windows.Forms.RichTextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.panelZoom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.guna2Panel1.SuspendLayout();
             this.panel_chung.SuspendLayout();
+            this.guna2Panel3.SuspendLayout();
             this.panel_size.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
             this.panel_shape.SuspendLayout();
@@ -110,7 +111,6 @@
             this.panel_color_picker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_color)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.guna2Panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelView
@@ -135,7 +135,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1286, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1286, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -155,24 +155,28 @@
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // panelZoom
             // 
@@ -180,27 +184,16 @@
             this.panelZoom.BorderColor = System.Drawing.Color.DarkGray;
             this.panelZoom.BorderRadius = 1;
             this.panelZoom.BorderThickness = 1;
-            this.panelZoom.Controls.Add(this.labelZoomPercent);
             this.panelZoom.Controls.Add(this.bt_zoom_plus);
             this.panelZoom.Controls.Add(this.bt_zoom_reduce);
             this.panelZoom.Controls.Add(this.trackBarZoom);
+            this.panelZoom.Controls.Add(this.labelZoomPercent);
             this.panelZoom.CustomBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panelZoom.Location = new System.Drawing.Point(908, 532);
             this.panelZoom.Name = "panelZoom";
             this.panelZoom.Size = new System.Drawing.Size(378, 31);
             this.panelZoom.TabIndex = 1;
             this.panelZoom.Paint += new System.Windows.Forms.PaintEventHandler(this.panelZoom_Paint);
-            // 
-            // labelZoomPercent
-            // 
-            this.labelZoomPercent.AutoSize = true;
-            this.labelZoomPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelZoomPercent.ForeColor = System.Drawing.Color.Black;
-            this.labelZoomPercent.Location = new System.Drawing.Point(35, 8);
-            this.labelZoomPercent.Name = "labelZoomPercent";
-            this.labelZoomPercent.Size = new System.Drawing.Size(37, 18);
-            this.labelZoomPercent.TabIndex = 3;
-            this.labelZoomPercent.Text = "20%";
             // 
             // bt_zoom_plus
             // 
@@ -210,6 +203,7 @@
             this.bt_zoom_plus.TabIndex = 2;
             this.bt_zoom_plus.Text = "+";
             this.bt_zoom_plus.UseVisualStyleBackColor = true;
+            this.bt_zoom_plus.Click += new System.EventHandler(this.bt_zoom_plus_Click);
             // 
             // bt_zoom_reduce
             // 
@@ -219,14 +213,29 @@
             this.bt_zoom_reduce.TabIndex = 1;
             this.bt_zoom_reduce.Text = "-";
             this.bt_zoom_reduce.UseVisualStyleBackColor = true;
+            this.bt_zoom_reduce.Click += new System.EventHandler(this.bt_zoom_reduce_Click);
             // 
             // trackBarZoom
             // 
             this.trackBarZoom.Location = new System.Drawing.Point(104, 3);
+            this.trackBarZoom.Maximum = 200;
+            this.trackBarZoom.Minimum = 100;
             this.trackBarZoom.Name = "trackBarZoom";
             this.trackBarZoom.Size = new System.Drawing.Size(131, 56);
             this.trackBarZoom.TabIndex = 0;
-            this.trackBarZoom.Value = 10;
+            this.trackBarZoom.Value = 100;
+            this.trackBarZoom.Scroll += new System.EventHandler(this.trackBarZoom_Scroll);
+            // 
+            // labelZoomPercent
+            // 
+            this.labelZoomPercent.AutoSize = true;
+            this.labelZoomPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelZoomPercent.ForeColor = System.Drawing.Color.Black;
+            this.labelZoomPercent.Location = new System.Drawing.Point(35, 8);
+            this.labelZoomPercent.Name = "labelZoomPercent";
+            this.labelZoomPercent.Size = new System.Drawing.Size(45, 18);
+            this.labelZoomPercent.TabIndex = 3;
+            this.labelZoomPercent.Text = "100%";
             // 
             // panel2
             // 
@@ -290,10 +299,107 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 28);
+            this.panel_chung.Location = new System.Drawing.Point(0, 30);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1286, 107);
             this.panel_chung.TabIndex = 6;
+            // 
+            // guna2Panel3
+            // 
+            this.guna2Panel3.BorderColor = System.Drawing.Color.Gainsboro;
+            this.guna2Panel3.BorderThickness = 1;
+            this.guna2Panel3.Controls.Add(this.richTB_text);
+            this.guna2Panel3.Controls.Add(this.btn_underline);
+            this.guna2Panel3.Controls.Add(this.btn_I);
+            this.guna2Panel3.Controls.Add(this.btn_Bold);
+            this.guna2Panel3.Controls.Add(this.cb_TextSize);
+            this.guna2Panel3.Controls.Add(this.cb_Font);
+            this.guna2Panel3.Location = new System.Drawing.Point(947, 0);
+            this.guna2Panel3.Name = "guna2Panel3";
+            this.guna2Panel3.Size = new System.Drawing.Size(336, 107);
+            this.guna2Panel3.TabIndex = 10;
+            // 
+            // richTB_text
+            // 
+            this.richTB_text.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTB_text.Location = new System.Drawing.Point(155, 8);
+            this.richTB_text.Name = "richTB_text";
+            this.richTB_text.Size = new System.Drawing.Size(178, 84);
+            this.richTB_text.TabIndex = 5;
+            this.richTB_text.Text = "";
+            // 
+            // btn_underline
+            // 
+            this.btn_underline.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_underline.ForeColor = System.Drawing.Color.Black;
+            this.btn_underline.Location = new System.Drawing.Point(111, 69);
+            this.btn_underline.Name = "btn_underline";
+            this.btn_underline.Size = new System.Drawing.Size(38, 23);
+            this.btn_underline.TabIndex = 4;
+            this.btn_underline.Text = "U";
+            this.btn_underline.UseVisualStyleBackColor = true;
+            this.btn_underline.Click += new System.EventHandler(this.button1_Click_2);
+            // 
+            // btn_I
+            // 
+            this.btn_I.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_I.ForeColor = System.Drawing.Color.Black;
+            this.btn_I.Location = new System.Drawing.Point(67, 70);
+            this.btn_I.Name = "btn_I";
+            this.btn_I.Size = new System.Drawing.Size(38, 23);
+            this.btn_I.TabIndex = 3;
+            this.btn_I.Text = "I";
+            this.btn_I.UseVisualStyleBackColor = true;
+            this.btn_I.Click += new System.EventHandler(this.btn_I_Click);
+            // 
+            // btn_Bold
+            // 
+            this.btn_Bold.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Bold.ForeColor = System.Drawing.Color.Black;
+            this.btn_Bold.Location = new System.Drawing.Point(22, 70);
+            this.btn_Bold.Name = "btn_Bold";
+            this.btn_Bold.Size = new System.Drawing.Size(39, 23);
+            this.btn_Bold.TabIndex = 2;
+            this.btn_Bold.Text = "B";
+            this.btn_Bold.UseVisualStyleBackColor = true;
+            this.btn_Bold.Click += new System.EventHandler(this.btn_Bold_Click);
+            // 
+            // cb_TextSize
+            // 
+            this.cb_TextSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_TextSize.FormattingEnabled = true;
+            this.cb_TextSize.Items.AddRange(new object[] {
+            "8",
+            "9 ",
+            "10",
+            "11",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "24",
+            "26",
+            "28",
+            "36",
+            "48",
+            "72"});
+            this.cb_TextSize.Location = new System.Drawing.Point(102, 39);
+            this.cb_TextSize.Name = "cb_TextSize";
+            this.cb_TextSize.Size = new System.Drawing.Size(47, 24);
+            this.cb_TextSize.TabIndex = 1;
+            this.cb_TextSize.Text = "11";
+            // 
+            // cb_Font
+            // 
+            this.cb_Font.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_Font.FormattingEnabled = true;
+            this.cb_Font.Location = new System.Drawing.Point(3, 9);
+            this.cb_Font.Name = "cb_Font";
+            this.cb_Font.Size = new System.Drawing.Size(146, 24);
+            this.cb_Font.TabIndex = 0;
+            this.cb_Font.Text = "Select Font";
             // 
             // label5
             // 
@@ -382,6 +488,7 @@
             this.bt_size_reduce.TabIndex = 1;
             this.bt_size_reduce.Text = "-";
             this.bt_size_reduce.UseVisualStyleBackColor = true;
+            this.bt_size_reduce.Click += new System.EventHandler(this.bt_size_reduce_Click);
             // 
             // tb_size
             // 
@@ -402,6 +509,8 @@
             this.tb_size.SelectedText = "";
             this.tb_size.Size = new System.Drawing.Size(40, 20);
             this.tb_size.TabIndex = 0;
+            this.tb_size.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tb_size.TextChanged += new System.EventHandler(this.tb_size_TextChanged);
             // 
             // panel_shape
             // 
@@ -733,9 +842,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 136);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 146);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1283, 388);
+            this.pictureBox1.Size = new System.Drawing.Size(1280, 388);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -745,131 +855,27 @@
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
-            // guna2ComboBox1
+            // panel1
             // 
-            this.guna2ComboBox1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.guna2ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.guna2ComboBox1.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.guna2ComboBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-            this.guna2ComboBox1.ItemHeight = 30;
-            this.guna2ComboBox1.Location = new System.Drawing.Point(263, 146);
-            this.guna2ComboBox1.Name = "guna2ComboBox1";
-            this.guna2ComboBox1.Size = new System.Drawing.Size(50, 36);
-            this.guna2ComboBox1.TabIndex = 0;
-            // 
-            // guna2Panel3
-            // 
-            this.guna2Panel3.BorderColor = System.Drawing.Color.Gainsboro;
-            this.guna2Panel3.BorderThickness = 1;
-            this.guna2Panel3.Controls.Add(this.richTB_text);
-            this.guna2Panel3.Controls.Add(this.btn_underline);
-            this.guna2Panel3.Controls.Add(this.btn_I);
-            this.guna2Panel3.Controls.Add(this.btn_Bold);
-            this.guna2Panel3.Controls.Add(this.cb_TextSize);
-            this.guna2Panel3.Controls.Add(this.cb_Font);
-            this.guna2Panel3.Location = new System.Drawing.Point(947, 0);
-            this.guna2Panel3.Name = "guna2Panel3";
-            this.guna2Panel3.Size = new System.Drawing.Size(336, 107);
-            this.guna2Panel3.TabIndex = 10;
-            // 
-            // cb_Font
-            // 
-            this.cb_Font.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Font.FormattingEnabled = true;
-            this.cb_Font.Location = new System.Drawing.Point(3, 9);
-            this.cb_Font.Name = "cb_Font";
-            this.cb_Font.Size = new System.Drawing.Size(146, 24);
-            this.cb_Font.TabIndex = 0;
-            this.cb_Font.Text = "Select Font";
-            // 
-            // cb_TextSize
-            // 
-            this.cb_TextSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_TextSize.FormattingEnabled = true;
-            this.cb_TextSize.Items.AddRange(new object[] {
-            "8",
-            "9 ",
-            "10",
-            "11",
-            "12",
-            "14",
-            "16",
-            "18",
-            "20",
-            "22",
-            "24",
-            "26",
-            "28",
-            "36",
-            "48",
-            "72"});
-            this.cb_TextSize.Location = new System.Drawing.Point(102, 39);
-            this.cb_TextSize.Name = "cb_TextSize";
-            this.cb_TextSize.Size = new System.Drawing.Size(47, 24);
-            this.cb_TextSize.TabIndex = 1;
-            this.cb_TextSize.Text = "11";
-            // 
-            // btn_Bold
-            // 
-            this.btn_Bold.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Bold.ForeColor = System.Drawing.Color.Black;
-            this.btn_Bold.Location = new System.Drawing.Point(22, 70);
-            this.btn_Bold.Name = "btn_Bold";
-            this.btn_Bold.Size = new System.Drawing.Size(39, 23);
-            this.btn_Bold.TabIndex = 2;
-            this.btn_Bold.Text = "B";
-            this.btn_Bold.UseVisualStyleBackColor = true;
-            this.btn_Bold.Click += new System.EventHandler(this.btn_Bold_Click);
-            // 
-            // btn_I
-            // 
-            this.btn_I.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_I.ForeColor = System.Drawing.Color.Black;
-            this.btn_I.Location = new System.Drawing.Point(67, 70);
-            this.btn_I.Name = "btn_I";
-            this.btn_I.Size = new System.Drawing.Size(38, 23);
-            this.btn_I.TabIndex = 3;
-            this.btn_I.Text = "I";
-            this.btn_I.UseVisualStyleBackColor = true;
-            this.btn_I.Click += new System.EventHandler(this.btn_I_Click);
-            // 
-            // btn_underline
-            // 
-            this.btn_underline.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_underline.ForeColor = System.Drawing.Color.Black;
-            this.btn_underline.Location = new System.Drawing.Point(111, 69);
-            this.btn_underline.Name = "btn_underline";
-            this.btn_underline.Size = new System.Drawing.Size(38, 23);
-            this.btn_underline.TabIndex = 4;
-            this.btn_underline.Text = "U";
-            this.btn_underline.UseVisualStyleBackColor = true;
-            this.btn_underline.Click += new System.EventHandler(this.button1_Click_2);
-            // 
-            // richTB_text
-            // 
-            this.richTB_text.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTB_text.Location = new System.Drawing.Point(155, 8);
-            this.richTB_text.Name = "richTB_text";
-            this.richTB_text.Size = new System.Drawing.Size(178, 84);
-            this.richTB_text.TabIndex = 5;
-            this.richTB_text.Text = "";
+            this.panel1.AutoScroll = true;
+            this.panel1.Location = new System.Drawing.Point(-10, 146);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1057, 368);
+            this.panel1.TabIndex = 8;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1286, 562);
+            this.ClientSize = new System.Drawing.Size(1286, 566);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.guna2ComboBox1);
             this.Controls.Add(this.panel_chung);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panelZoom);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.panel1);
             this.Cursor = System.Windows.Forms.Cursors.Cross;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Navy;
@@ -877,6 +883,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "ArtEase";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -888,6 +895,7 @@
             this.guna2Panel1.PerformLayout();
             this.panel_chung.ResumeLayout(false);
             this.panel_chung.PerformLayout();
+            this.guna2Panel3.ResumeLayout(false);
             this.panel_size.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).EndInit();
             this.panel_shape.ResumeLayout(false);
@@ -902,7 +910,6 @@
             this.panel_color_picker.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_color)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.guna2Panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -963,8 +970,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox cb_rotate;
         private Guna.UI2.WinForms.Guna2PictureBox pb_brush;
-        private Guna.UI2.WinForms.Guna2ComboBox guna2ComboBox1;
         private System.Windows.Forms.ComboBox cb_brush;
+        private System.Windows.Forms.Panel panel1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
         private System.Windows.Forms.Button btn_I;
         private System.Windows.Forms.Button btn_Bold;
@@ -972,9 +979,6 @@
         private System.Windows.Forms.ComboBox cb_Font;
         private System.Windows.Forms.RichTextBox richTB_text;
         private System.Windows.Forms.Button btn_underline;
-
-        //Flexible textbox ---------------------------------
-        //private FlexibleTextBox flexibleTextBox1;
     }
 }
 

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BASICPAINT
 {
@@ -71,6 +73,8 @@ namespace BASICPAINT
             pictureBox1.Image = bm;
             trianglesList = new List<Triangle>();
             //pen.Width = (float)pen_width.Value;
+            tb_size.Text = pen.Width.ToString();
+            
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,10 +100,12 @@ namespace BASICPAINT
             {
                 cb_Font.Items.Add(font.Name.ToString());
             }
-            cb_Font.SelectedItem = "Arial";
-
-            
+            cb_Font.SelectedItem = "Arial";            
             cb_TextSize.SelectedItem = "11";
+
+            this.DoubleBuffered = true;
+            org = new PictureBox();
+            org.Image = pictureBox1.Image;
         }
 
         private void guna2Button2_Click(object sender, EventArgs e)
@@ -211,7 +217,8 @@ namespace BASICPAINT
 
         private void bt_size_plus_Click(object sender, EventArgs e)
         {
-
+            pen.Width = pen.Width + 1;
+            tb_size.Text = pen.Width.ToString();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -303,6 +310,7 @@ namespace BASICPAINT
             {
                 DrawText(x, y);
             }
+            pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -343,6 +351,7 @@ namespace BASICPAINT
             //{
             //    triangle.Draw(g, pen);
             //}
+            
         }
 
         private void DrawText(int x, int y)
@@ -426,8 +435,8 @@ namespace BASICPAINT
             }
             if (curTool == TOOL.TEXT)
             {
-                
-               
+
+
             }
         }
 
@@ -503,6 +512,180 @@ namespace BASICPAINT
 
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                var sdf = new SaveFileDialog();
+                sdf.Filter = "Image(*.png)|*.png";
+                if (sdf.ShowDialog() == DialogResult.OK)
+                {
+                    Bitmap btm = bm.Clone(new Rectangle(0, 0,pictureBox1.Width, pictureBox1.Height), bm.PixelFormat);
+                    btm.Save(sdf.FileName, ImageFormat.Png);
+                    MessageBox.Show("Image Saved Sucessully");
+                }
+                else if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Draw Something First");
+                }
+            }
+
+        }
+
+        private void tb_size_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void bt_size_reduce_Click(object sender, EventArgs e)
+        {
+            pen.Width = pen.Width - 1;
+            tb_size.Text = pen.Width.ToString();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "Do you want to save currrent drawing?";
+            string title = "Close Window";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                saveToolStripMenuItem.PerformClick();
+            }
+           
+                g.Clear(Color.White);
+                pictureBox1.Image = bm;
+                curTool = TOOL.SELECT;
+            
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.ImageLocation = ofd.FileName;
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form1.ActiveForm.Close();
+        }
+
+        
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+            string message = "Do you want to save currrent drawing?";
+            string title = "Close Window";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                saveToolStripMenuItem.PerformClick();
+            }
+            Application.Exit();
+        }
+
+        static Point set_Point(PictureBox pb, Point pt)
+        {
+            float px = 1f * pb.Width / pb.Width;
+            float py = 1f * pb.Height / pb.Height;
+            return new Point((int)(pt.X * px), (int)(pt.Y * py));
+        }
+        private void Validate(Bitmap bm, Stack<Point> sp, int x, int y, Color Old_Color, Color New_Color)
+        {
+            Color cx = bm.GetPixel(x, y);
+            if (cx == Old_Color)
+            {
+                sp.Push(new Point(x, y));
+                bm.SetPixel(x, y, New_Color);
+            }
+        }
+
+        //public void Fill(Bitmap bm, int x, int y, Color New_Clr)
+        //{
+        //    Color Old_Color = bm.GetPixel(x, y);
+        //    Stack<Point> pixel = new Stack<Point>();
+        //    pixel.Push(new Point(x, y));
+        //    bm.SetPixel(x, y, New_Clr);
+        //    if (Old_Color == New_Clr) { return; }
+
+        //    while (pixel.Count > 0)
+        //    {
+        //        Point pt = (Point)pixel.Pop();
+        //        if (pt.X > 0 && pt.Y > 0 && pt.X < bm.Width - 1 && pt.Y < bm.Height - 1)
+        //        {
+        //            Validate(bm, pixel, pt.X - 1, pt.Y, Old_Color, New_Clr);
+        //            Validate(bm, pixel, pt.X, pt.Y - 1, Old_Color, New_Clr);
+        //            Validate(bm, pixel, pt.X + 1, pt.Y, Old_Color, New_Clr);
+        //            Validate(bm, pixel, pt.X, pt.Y + 1, Old_Color, New_Clr);
+        //        }
+        //    }
+        //}
+
+        //private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        //{
+        //    if (curTool == TOOL.FILLCOLOR)
+        //    {
+        //        Point point = set_Point(pictureBox1, e.Location);
+        //        Fill(bm, point.X, point.Y, new_color);
+        //    }
+        //}
+        PictureBox org;
+        System.Drawing.Image ZoomPicture(Bitmap bm, System.Drawing.Image img, Size size)
+        {
+             bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
+                Convert.ToInt32(img.Height * size.Height)/100);
+            Graphics gpu = Graphics.FromImage(bm);
+            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            return bm;
+            
+        }
+        private void trackBarZoom_Scroll(object sender, EventArgs e)
+        {
+            labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+            if (trackBarZoom.Value != 0)
+            {
+                pictureBox1.Image = null;
+                pictureBox1.Image = ZoomPicture(bm,org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            }
+           
+            
+        }
+
+        private void bt_zoom_plus_Click(object sender, EventArgs e)
+        {
+            if (trackBarZoom.Value < 195)
+            {
+                trackBarZoom.Value = trackBarZoom.Value + 5;
+            }
+            else
+            {
+                trackBarZoom.Value = 200;
+            }
+            labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+        }
+
+        private void bt_zoom_reduce_Click(object sender, EventArgs e)
+        {
+            if (trackBarZoom.Value > 105)
+            {
+                trackBarZoom.Value = trackBarZoom.Value - 5;
+            }
+            else
+            {
+                trackBarZoom.Value = 100;
+            }    
+            labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+        }
+
+        
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
         {
 
