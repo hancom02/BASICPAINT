@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BASICPAINT
 {
@@ -77,7 +78,9 @@ namespace BASICPAINT
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.DoubleBuffered = true;
+            org = new PictureBox();
+            org.Image = pictureBox1.Image;
         }
 
         private void guna2Button2_Click(object sender, EventArgs e)
@@ -149,7 +152,7 @@ namespace BASICPAINT
 
         private void guna2ImageButton3_Click(object sender, EventArgs e)
         {
-
+            curTool = TOOL.ERASER;
         }
 
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -278,6 +281,7 @@ namespace BASICPAINT
                 Point point3 = End;
                 g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
             }
+            pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -314,6 +318,7 @@ namespace BASICPAINT
             //{
             //    triangle.Draw(g, pen);
             //}
+            
         }
 
         private void guna2ImageButton2_Click_1(object sender, EventArgs e)
@@ -369,7 +374,7 @@ namespace BASICPAINT
 
         private void tb_size_TextChanged(object sender, EventArgs e)
         {
-           
+            
         }
 
         private void bt_size_reduce_Click(object sender, EventArgs e)
@@ -472,7 +477,55 @@ namespace BASICPAINT
                 Fill(bm, point.X, point.Y, new_color);
             }
         }
+        PictureBox org;
+        Image ZoomPicture(Bitmap bm, Image img, Size size)
+        {
+             bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
+                Convert.ToInt32(img.Height * size.Height)/100);
+            Graphics gpu = Graphics.FromImage(bm);
+            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            return bm;
+            
+        }
+        private void trackBarZoom_Scroll(object sender, EventArgs e)
+        {
+            labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+            if (trackBarZoom.Value != 0)
+            {
+                pictureBox1.Image = null;
+                pictureBox1.Image = ZoomPicture(bm,org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            }
+           
+            
+        }
 
+        private void bt_zoom_plus_Click(object sender, EventArgs e)
+        {
+            if (trackBarZoom.Value < 195)
+            {
+                trackBarZoom.Value = trackBarZoom.Value + 5;
+            }
+            else
+            {
+                trackBarZoom.Value = 200;
+            }
+            labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+        }
+
+        private void bt_zoom_reduce_Click(object sender, EventArgs e)
+        {
+            if (trackBarZoom.Value > 105)
+            {
+                trackBarZoom.Value = trackBarZoom.Value - 5;
+            }
+            else
+            {
+                trackBarZoom.Value = 100;
+            }    
+            labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+        }
+
+        
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
         {
 
