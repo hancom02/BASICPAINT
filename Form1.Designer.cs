@@ -84,7 +84,7 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.fontDialog2 = new System.Windows.Forms.FontDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.guna2ComboBox1 = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.panelZoom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
@@ -103,6 +103,7 @@
             this.panel_color_picker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_color)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelView
@@ -128,7 +129,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1050, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1050, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -140,7 +141,7 @@
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
@@ -177,10 +178,10 @@
             this.panelZoom.BorderColor = System.Drawing.Color.DarkGray;
             this.panelZoom.BorderRadius = 1;
             this.panelZoom.BorderThickness = 1;
-            this.panelZoom.Controls.Add(this.labelZoomPercent);
             this.panelZoom.Controls.Add(this.bt_zoom_plus);
             this.panelZoom.Controls.Add(this.bt_zoom_reduce);
             this.panelZoom.Controls.Add(this.trackBarZoom);
+            this.panelZoom.Controls.Add(this.labelZoomPercent);
             this.panelZoom.CustomBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panelZoom.Location = new System.Drawing.Point(753, 532);
             this.panelZoom.Name = "panelZoom";
@@ -194,9 +195,9 @@
             this.labelZoomPercent.ForeColor = System.Drawing.Color.Black;
             this.labelZoomPercent.Location = new System.Drawing.Point(35, 8);
             this.labelZoomPercent.Name = "labelZoomPercent";
-            this.labelZoomPercent.Size = new System.Drawing.Size(46, 22);
+            this.labelZoomPercent.Size = new System.Drawing.Size(56, 22);
             this.labelZoomPercent.TabIndex = 3;
-            this.labelZoomPercent.Text = "20%";
+            this.labelZoomPercent.Text = "100%";
             // 
             // bt_zoom_plus
             // 
@@ -206,6 +207,7 @@
             this.bt_zoom_plus.TabIndex = 2;
             this.bt_zoom_plus.Text = "+";
             this.bt_zoom_plus.UseVisualStyleBackColor = true;
+            this.bt_zoom_plus.Click += new System.EventHandler(this.bt_zoom_plus_Click);
             // 
             // bt_zoom_reduce
             // 
@@ -215,14 +217,18 @@
             this.bt_zoom_reduce.TabIndex = 1;
             this.bt_zoom_reduce.Text = "-";
             this.bt_zoom_reduce.UseVisualStyleBackColor = true;
+            this.bt_zoom_reduce.Click += new System.EventHandler(this.bt_zoom_reduce_Click);
             // 
             // trackBarZoom
             // 
             this.trackBarZoom.Location = new System.Drawing.Point(104, 3);
+            this.trackBarZoom.Maximum = 200;
+            this.trackBarZoom.Minimum = 100;
             this.trackBarZoom.Name = "trackBarZoom";
             this.trackBarZoom.Size = new System.Drawing.Size(131, 69);
             this.trackBarZoom.TabIndex = 0;
-            this.trackBarZoom.Value = 10;
+            this.trackBarZoom.Value = 100;
+            this.trackBarZoom.Scroll += new System.EventHandler(this.trackBarZoom_Scroll);
             // 
             // panel2
             // 
@@ -285,7 +291,7 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 36);
+            this.panel_chung.Location = new System.Drawing.Point(0, 33);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1050, 107);
             this.panel_chung.TabIndex = 6;
@@ -733,9 +739,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 146);
+            this.pictureBox1.Location = new System.Drawing.Point(28, 8);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1050, 388);
+            this.pictureBox1.Size = new System.Drawing.Size(1029, 380);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -744,20 +751,14 @@
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
-            // guna2ComboBox1
+            // panel1
             // 
-            this.guna2ComboBox1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.guna2ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.guna2ComboBox1.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.guna2ComboBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-            this.guna2ComboBox1.ItemHeight = 30;
-            this.guna2ComboBox1.Location = new System.Drawing.Point(263, 146);
-            this.guna2ComboBox1.Name = "guna2ComboBox1";
-            this.guna2ComboBox1.Size = new System.Drawing.Size(50, 36);
-            this.guna2ComboBox1.TabIndex = 0;
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(-10, 146);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1057, 368);
+            this.panel1.TabIndex = 8;
             // 
             // Form1
             // 
@@ -765,13 +766,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1050, 562);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.guna2ComboBox1);
             this.Controls.Add(this.panel_chung);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panelZoom);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.panel1);
             this.Cursor = System.Windows.Forms.Cursors.Cross;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Navy;
@@ -805,6 +805,8 @@
             this.panel_color_picker.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_color)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -865,8 +867,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox cb_rotate;
         private Guna.UI2.WinForms.Guna2PictureBox pb_brush;
-        private Guna.UI2.WinForms.Guna2ComboBox guna2ComboBox1;
         private System.Windows.Forms.ComboBox cb_brush;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
