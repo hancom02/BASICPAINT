@@ -5,8 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -27,18 +29,34 @@ namespace BASICPAINT
         ColorDialog cd = new ColorDialog();
         Color new_color = Color.Black;
         //Point lastPoint;
+
+        private Color defaultColor = Color.White; // Màu ban đầu của button
+        private Color activeColor = Color.LightBlue; // Màu khi button được kích hoạt
+
+        private bool isBoldActive = false;
+        private bool isItalicActive = false;
+        private bool isUnderlineActive = false;
+
         public enum TOOL
         {
             SELECT,
             PEN,
             ERASER,
             FILLCOLOR,
+            TEXT,
             LINE,
             ELLIPSE,
             RECTANGLE,
             TRIANGLE
         }
         public TOOL curTool = TOOL.SELECT;
+
+        public enum CREATE_TEXT
+        {
+            YES,
+            NO,
+        }
+        public CREATE_TEXT curCreateText = CREATE_TEXT.YES;
 
         public Form1()
         {
@@ -78,6 +96,13 @@ namespace BASICPAINT
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            foreach (FontFamily font in FontFamily.Families)
+            {
+                cb_Font.Items.Add(font.Name.ToString());
+            }
+            cb_Font.SelectedItem = "Arial";            
+            cb_TextSize.SelectedItem = "11";
+
             this.DoubleBuffered = true;
             org = new PictureBox();
             org.Image = pictureBox1.Image;
@@ -281,6 +306,10 @@ namespace BASICPAINT
                 Point point3 = End;
                 g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
             }
+            if (curTool == TOOL.TEXT)
+            {
+                DrawText(x, y);
+            }
             pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
@@ -313,12 +342,24 @@ namespace BASICPAINT
                     Point point3 = End;
                     g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
                 }
+                if (curTool == TOOL.TEXT)
+                {
+                    DrawText(x, y);
+                }
             }
             //foreach (var triangle in trianglesList)
             //{
             //    triangle.Draw(g, pen);
             //}
             
+        }
+
+        private void DrawText(int x, int y)
+        {
+           Font font = richTB_text.Font;
+           Brush brush = new SolidBrush(new_color);
+
+           g.DrawString(richTB_text.Text, font, brush, x, y);
         }
 
         private void guna2ImageButton2_Click_1(object sender, EventArgs e)
@@ -350,6 +391,125 @@ namespace BASICPAINT
             new_color = cd.Color;
             pic_color.FillColor = cd.Color;
             pen.Color = cd.Color;
+        }
+        private void validate(Bitmap bm, Stack<Point> sp, int x, int y, Color old_color, Color new_color)
+        {
+            Color cx = bm.GetPixel(x, y);
+            if (cx == old_color)
+            {
+                sp.Push(new Point(x, y));
+                bm.SetPixel(x, y, new_color);
+            }
+        }
+
+        public void Fill(Bitmap bm, int x, int y, Color new_clr)
+        {
+            Color old_color = bm.GetPixel(x, y);
+            Stack<Point> pixel = new Stack<Point>();
+            pixel.Push(new Point(x, y));
+            bm.SetPixel(x, y, new_clr);
+            if (old_color == new_clr) return;
+
+            while (pixel.Count > 0)
+            {
+                Point pt = (Point)pixel.Pop();
+                if (pt.X > 0 && pt.Y > 0
+                    && pt.X < bm.Width - 1
+                    && pt.Y < bm.Height - 1)
+                {
+                    validate(bm, pixel, pt.X - 1, pt.Y, old_color, new_clr);
+                    validate(bm, pixel, pt.X, pt.Y - 1, old_color, new_clr);
+                    validate(bm, pixel, pt.X + 1, pt.Y, old_color, new_clr);
+                    validate(bm, pixel, pt.X, pt.Y + 1, old_color, new_clr);
+
+                }
+            }
+        }
+
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (curTool == TOOL.FILLCOLOR)
+            {
+                Point point = set_point(pictureBox1, e.Location);
+                Fill(bm, point.X, point.Y, new_color);
+            }
+            if (curTool == TOOL.TEXT)
+            {
+
+
+            }
+        }
+
+        private void bt_text_Click(object sender, EventArgs e)
+        {
+            curTool = TOOL.TEXT;
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_I_Click(object sender, EventArgs e)
+        {
+            isItalicActive = !isItalicActive; // Đảo ngược trạng thái
+
+            // Cập nhật màu sắc của button
+            btn_I.BackColor = isItalicActive ? activeColor : defaultColor;
+
+            // Áp dụng font style
+            ApplyFontStyle();
+        }
+
+        private void btn_Bold_Click(object sender, EventArgs e)
+        {
+            isBoldActive = !isBoldActive; // Đảo ngược trạng thái
+
+            // Cập nhật màu sắc của button
+            btn_Bold.BackColor = isBoldActive ? activeColor : defaultColor;
+
+            // Áp dụng font style
+            ApplyFontStyle();
+        }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            isUnderlineActive = !isUnderlineActive; // Đảo ngược trạng thái
+
+            // Cập nhật màu sắc của button
+            btn_underline.BackColor = isUnderlineActive ? activeColor : defaultColor;
+
+            // Áp dụng font style
+            ApplyFontStyle();
+        }
+        private void ApplyFontStyle()
+        {
+            // Lấy tên font từ ComboBox
+            string fontName = cb_Font.SelectedItem.ToString();
+
+            // Lấy kích thước font từ ComboBox
+            float fontSize = float.Parse(cb_TextSize.SelectedItem.ToString());
+
+            // Xác định kiểu chữ in đậm, nghiêng, gạch chân dựa trên trạng thái của các button
+            FontStyle style = FontStyle.Regular;
+            if (isBoldActive)
+                style |= FontStyle.Bold;
+            if (isItalicActive)
+                style |= FontStyle.Italic;
+            if (isUnderlineActive)
+                style |= FontStyle.Underline;
+
+            // Tạo đối tượng Font với các giá trị đã chọn và kiểu chữ
+            Font font = new Font(fontName, fontSize, style);
+
+            // Áp dụng font cho văn bản hoặc điều khiển khác
+            richTB_text.Font = font;
+        }
+
+        private void panelZoom_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -448,37 +608,37 @@ namespace BASICPAINT
             }
         }
 
-        public void Fill(Bitmap bm, int x, int y, Color New_Clr)
-        {
-            Color Old_Color = bm.GetPixel(x, y);
-            Stack<Point> pixel = new Stack<Point>();
-            pixel.Push(new Point(x, y));
-            bm.SetPixel(x, y, New_Clr);
-            if (Old_Color == New_Clr) { return; }
+        //public void Fill(Bitmap bm, int x, int y, Color New_Clr)
+        //{
+        //    Color Old_Color = bm.GetPixel(x, y);
+        //    Stack<Point> pixel = new Stack<Point>();
+        //    pixel.Push(new Point(x, y));
+        //    bm.SetPixel(x, y, New_Clr);
+        //    if (Old_Color == New_Clr) { return; }
 
-            while (pixel.Count > 0)
-            {
-                Point pt = (Point)pixel.Pop();
-                if (pt.X > 0 && pt.Y > 0 && pt.X < bm.Width - 1 && pt.Y < bm.Height - 1)
-                {
-                    Validate(bm, pixel, pt.X - 1, pt.Y, Old_Color, New_Clr);
-                    Validate(bm, pixel, pt.X, pt.Y - 1, Old_Color, New_Clr);
-                    Validate(bm, pixel, pt.X + 1, pt.Y, Old_Color, New_Clr);
-                    Validate(bm, pixel, pt.X, pt.Y + 1, Old_Color, New_Clr);
-                }
-            }
-        }
+        //    while (pixel.Count > 0)
+        //    {
+        //        Point pt = (Point)pixel.Pop();
+        //        if (pt.X > 0 && pt.Y > 0 && pt.X < bm.Width - 1 && pt.Y < bm.Height - 1)
+        //        {
+        //            Validate(bm, pixel, pt.X - 1, pt.Y, Old_Color, New_Clr);
+        //            Validate(bm, pixel, pt.X, pt.Y - 1, Old_Color, New_Clr);
+        //            Validate(bm, pixel, pt.X + 1, pt.Y, Old_Color, New_Clr);
+        //            Validate(bm, pixel, pt.X, pt.Y + 1, Old_Color, New_Clr);
+        //        }
+        //    }
+        //}
 
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (curTool == TOOL.FILLCOLOR)
-            {
-                Point point = set_Point(pictureBox1, e.Location);
-                Fill(bm, point.X, point.Y, new_color);
-            }
-        }
+        //private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        //{
+        //    if (curTool == TOOL.FILLCOLOR)
+        //    {
+        //        Point point = set_Point(pictureBox1, e.Location);
+        //        Fill(bm, point.X, point.Y, new_color);
+        //    }
+        //}
         PictureBox org;
-        Image ZoomPicture(Bitmap bm, Image img, Size size)
+        System.Drawing.Image ZoomPicture(Bitmap bm, System.Drawing.Image img, Size size)
         {
              bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
                 Convert.ToInt32(img.Height * size.Height)/100);

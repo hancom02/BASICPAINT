@@ -38,15 +38,22 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelZoom = new Guna.UI2.WinForms.Guna2Panel();
-            this.labelZoomPercent = new System.Windows.Forms.Label();
             this.bt_zoom_plus = new System.Windows.Forms.Button();
             this.bt_zoom_reduce = new System.Windows.Forms.Button();
             this.trackBarZoom = new System.Windows.Forms.TrackBar();
+            this.labelZoomPercent = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.panel_chung = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.richTB_text = new System.Windows.Forms.RichTextBox();
+            this.btn_underline = new System.Windows.Forms.Button();
+            this.btn_I = new System.Windows.Forms.Button();
+            this.btn_Bold = new System.Windows.Forms.Button();
+            this.cb_TextSize = new System.Windows.Forms.ComboBox();
+            this.cb_Font = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -91,6 +98,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.guna2Panel1.SuspendLayout();
             this.panel_chung.SuspendLayout();
+            this.guna2Panel3.SuspendLayout();
             this.panel_size.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
             this.panel_shape.SuspendLayout();
@@ -103,7 +111,6 @@
             this.panel_color_picker.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_color)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelView
@@ -122,14 +129,13 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1050, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1286, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -141,34 +147,34 @@
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -183,21 +189,11 @@
             this.panelZoom.Controls.Add(this.trackBarZoom);
             this.panelZoom.Controls.Add(this.labelZoomPercent);
             this.panelZoom.CustomBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panelZoom.Location = new System.Drawing.Point(753, 532);
+            this.panelZoom.Location = new System.Drawing.Point(908, 532);
             this.panelZoom.Name = "panelZoom";
-            this.panelZoom.Size = new System.Drawing.Size(298, 31);
+            this.panelZoom.Size = new System.Drawing.Size(378, 31);
             this.panelZoom.TabIndex = 1;
-            // 
-            // labelZoomPercent
-            // 
-            this.labelZoomPercent.AutoSize = true;
-            this.labelZoomPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelZoomPercent.ForeColor = System.Drawing.Color.Black;
-            this.labelZoomPercent.Location = new System.Drawing.Point(35, 8);
-            this.labelZoomPercent.Name = "labelZoomPercent";
-            this.labelZoomPercent.Size = new System.Drawing.Size(56, 22);
-            this.labelZoomPercent.TabIndex = 3;
-            this.labelZoomPercent.Text = "100%";
+            this.panelZoom.Paint += new System.Windows.Forms.PaintEventHandler(this.panelZoom_Paint);
             // 
             // bt_zoom_plus
             // 
@@ -225,10 +221,21 @@
             this.trackBarZoom.Maximum = 200;
             this.trackBarZoom.Minimum = 100;
             this.trackBarZoom.Name = "trackBarZoom";
-            this.trackBarZoom.Size = new System.Drawing.Size(131, 69);
+            this.trackBarZoom.Size = new System.Drawing.Size(131, 56);
             this.trackBarZoom.TabIndex = 0;
             this.trackBarZoom.Value = 100;
             this.trackBarZoom.Scroll += new System.EventHandler(this.trackBarZoom_Scroll);
+            // 
+            // labelZoomPercent
+            // 
+            this.labelZoomPercent.AutoSize = true;
+            this.labelZoomPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelZoomPercent.ForeColor = System.Drawing.Color.Black;
+            this.labelZoomPercent.Location = new System.Drawing.Point(35, 8);
+            this.labelZoomPercent.Name = "labelZoomPercent";
+            this.labelZoomPercent.Size = new System.Drawing.Size(45, 18);
+            this.labelZoomPercent.TabIndex = 3;
+            this.labelZoomPercent.Text = "100%";
             // 
             // panel2
             // 
@@ -256,7 +263,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(39, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 20);
+            this.label1.Size = new System.Drawing.Size(75, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "1222 x 1222";
             // 
@@ -271,7 +278,7 @@
             this.guna2Panel1.CustomBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.guna2Panel1.Location = new System.Drawing.Point(365, 532);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(388, 30);
+            this.guna2Panel1.Size = new System.Drawing.Size(545, 30);
             this.guna2Panel1.TabIndex = 5;
             // 
             // panel_chung
@@ -280,6 +287,7 @@
             this.panel_chung.BorderColor = System.Drawing.Color.Gainsboro;
             this.panel_chung.BorderStyle = System.Drawing.Drawing2D.DashStyle.Custom;
             this.panel_chung.BorderThickness = 1;
+            this.panel_chung.Controls.Add(this.guna2Panel3);
             this.panel_chung.Controls.Add(this.label5);
             this.panel_chung.Controls.Add(this.label4);
             this.panel_chung.Controls.Add(this.label3);
@@ -291,22 +299,118 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 33);
+            this.panel_chung.Location = new System.Drawing.Point(0, 30);
             this.panel_chung.Name = "panel_chung";
-            this.panel_chung.Size = new System.Drawing.Size(1050, 107);
+            this.panel_chung.Size = new System.Drawing.Size(1286, 107);
             this.panel_chung.TabIndex = 6;
+            // 
+            // guna2Panel3
+            // 
+            this.guna2Panel3.BorderColor = System.Drawing.Color.Gainsboro;
+            this.guna2Panel3.BorderThickness = 1;
+            this.guna2Panel3.Controls.Add(this.richTB_text);
+            this.guna2Panel3.Controls.Add(this.btn_underline);
+            this.guna2Panel3.Controls.Add(this.btn_I);
+            this.guna2Panel3.Controls.Add(this.btn_Bold);
+            this.guna2Panel3.Controls.Add(this.cb_TextSize);
+            this.guna2Panel3.Controls.Add(this.cb_Font);
+            this.guna2Panel3.Location = new System.Drawing.Point(947, 0);
+            this.guna2Panel3.Name = "guna2Panel3";
+            this.guna2Panel3.Size = new System.Drawing.Size(336, 107);
+            this.guna2Panel3.TabIndex = 10;
+            // 
+            // richTB_text
+            // 
+            this.richTB_text.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTB_text.Location = new System.Drawing.Point(155, 8);
+            this.richTB_text.Name = "richTB_text";
+            this.richTB_text.Size = new System.Drawing.Size(178, 84);
+            this.richTB_text.TabIndex = 5;
+            this.richTB_text.Text = "";
+            // 
+            // btn_underline
+            // 
+            this.btn_underline.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_underline.ForeColor = System.Drawing.Color.Black;
+            this.btn_underline.Location = new System.Drawing.Point(111, 69);
+            this.btn_underline.Name = "btn_underline";
+            this.btn_underline.Size = new System.Drawing.Size(38, 23);
+            this.btn_underline.TabIndex = 4;
+            this.btn_underline.Text = "U";
+            this.btn_underline.UseVisualStyleBackColor = true;
+            this.btn_underline.Click += new System.EventHandler(this.button1_Click_2);
+            // 
+            // btn_I
+            // 
+            this.btn_I.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_I.ForeColor = System.Drawing.Color.Black;
+            this.btn_I.Location = new System.Drawing.Point(67, 70);
+            this.btn_I.Name = "btn_I";
+            this.btn_I.Size = new System.Drawing.Size(38, 23);
+            this.btn_I.TabIndex = 3;
+            this.btn_I.Text = "I";
+            this.btn_I.UseVisualStyleBackColor = true;
+            this.btn_I.Click += new System.EventHandler(this.btn_I_Click);
+            // 
+            // btn_Bold
+            // 
+            this.btn_Bold.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Bold.ForeColor = System.Drawing.Color.Black;
+            this.btn_Bold.Location = new System.Drawing.Point(22, 70);
+            this.btn_Bold.Name = "btn_Bold";
+            this.btn_Bold.Size = new System.Drawing.Size(39, 23);
+            this.btn_Bold.TabIndex = 2;
+            this.btn_Bold.Text = "B";
+            this.btn_Bold.UseVisualStyleBackColor = true;
+            this.btn_Bold.Click += new System.EventHandler(this.btn_Bold_Click);
+            // 
+            // cb_TextSize
+            // 
+            this.cb_TextSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_TextSize.FormattingEnabled = true;
+            this.cb_TextSize.Items.AddRange(new object[] {
+            "8",
+            "9 ",
+            "10",
+            "11",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "24",
+            "26",
+            "28",
+            "36",
+            "48",
+            "72"});
+            this.cb_TextSize.Location = new System.Drawing.Point(102, 39);
+            this.cb_TextSize.Name = "cb_TextSize";
+            this.cb_TextSize.Size = new System.Drawing.Size(47, 24);
+            this.cb_TextSize.TabIndex = 1;
+            this.cb_TextSize.Text = "11";
+            // 
+            // cb_Font
+            // 
+            this.cb_Font.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_Font.FormattingEnabled = true;
+            this.cb_Font.Location = new System.Drawing.Point(3, 9);
+            this.cb_Font.Name = "cb_Font";
+            this.cb_Font.Size = new System.Drawing.Size(146, 24);
+            this.cb_Font.TabIndex = 0;
+            this.cb_Font.Text = "Select Font";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(828, 89);
+            this.label5.Location = new System.Drawing.Point(733, 89);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 20);
+            this.label5.Size = new System.Drawing.Size(46, 16);
             this.label5.TabIndex = 9;
             this.label5.Text = "Colors";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label4
             // 
@@ -315,7 +419,7 @@
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(394, 89);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 20);
+            this.label4.Size = new System.Drawing.Size(54, 16);
             this.label4.TabIndex = 8;
             this.label4.Text = "Shapes";
             // 
@@ -326,10 +430,9 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(168, 89);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 20);
+            this.label3.Size = new System.Drawing.Size(42, 16);
             this.label3.TabIndex = 7;
             this.label3.Text = "Tools";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label2
             // 
@@ -338,7 +441,7 @@
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(33, 89);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 20);
+            this.label2.Size = new System.Drawing.Size(45, 16);
             this.label2.TabIndex = 6;
             this.label2.Text = "Image";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -521,7 +624,7 @@
             "Water color"});
             this.cb_brush.Location = new System.Drawing.Point(3, 52);
             this.cb_brush.Name = "cb_brush";
-            this.cb_brush.Size = new System.Drawing.Size(64, 28);
+            this.cb_brush.Size = new System.Drawing.Size(64, 24);
             this.cb_brush.TabIndex = 2;
             this.cb_brush.Text = "Brush";
             // 
@@ -578,7 +681,7 @@
             this.bt_text.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.bt_text.Size = new System.Drawing.Size(36, 30);
             this.bt_text.TabIndex = 4;
-            this.bt_text.Click += new System.EventHandler(this.guna2ImageButton2_Click);
+            this.bt_text.Click += new System.EventHandler(this.bt_text_Click);
             // 
             // bt_fill
             // 
@@ -644,7 +747,7 @@
             "Flip vertical"});
             this.cb_rotate.Location = new System.Drawing.Point(54, 52);
             this.cb_rotate.Name = "cb_rotate";
-            this.cb_rotate.Size = new System.Drawing.Size(68, 28);
+            this.cb_rotate.Size = new System.Drawing.Size(68, 24);
             this.cb_rotate.TabIndex = 2;
             this.cb_rotate.Text = "Rotate";
             // 
@@ -655,7 +758,7 @@
             this.label6.ForeColor = System.Drawing.Color.Black;
             this.label6.Location = new System.Drawing.Point(3, 49);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(54, 20);
+            this.label6.Size = new System.Drawing.Size(45, 16);
             this.label6.TabIndex = 1;
             this.label6.Text = "Select";
             // 
@@ -683,7 +786,7 @@
             this.panel_color_picker.Controls.Add(this.pb_color);
             this.panel_color_picker.Location = new System.Drawing.Point(631, 0);
             this.panel_color_picker.Name = "panel_color_picker";
-            this.panel_color_picker.Size = new System.Drawing.Size(416, 82);
+            this.panel_color_picker.Size = new System.Drawing.Size(310, 82);
             this.panel_color_picker.TabIndex = 0;
             // 
             // lb_editecolor_2
@@ -693,7 +796,7 @@
             this.lb_editecolor_2.ForeColor = System.Drawing.Color.Black;
             this.lb_editecolor_2.Location = new System.Drawing.Point(249, 60);
             this.lb_editecolor_2.Name = "lb_editecolor_2";
-            this.lb_editecolor_2.Size = new System.Drawing.Size(51, 20);
+            this.lb_editecolor_2.Size = new System.Drawing.Size(44, 16);
             this.lb_editecolor_2.TabIndex = 3;
             this.lb_editecolor_2.Text = "colors";
             // 
@@ -704,7 +807,7 @@
             this.lb_edit_colors.ForeColor = System.Drawing.Color.Black;
             this.lb_edit_colors.Location = new System.Drawing.Point(249, 47);
             this.lb_edit_colors.Name = "lb_edit_colors";
-            this.lb_edit_colors.Size = new System.Drawing.Size(37, 20);
+            this.lb_edit_colors.Size = new System.Drawing.Size(30, 16);
             this.lb_edit_colors.TabIndex = 2;
             this.lb_edit_colors.Text = "Edit";
             this.lb_edit_colors.Click += new System.EventHandler(this.lb_edit_colors_Click);
@@ -739,12 +842,13 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(28, 8);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 146);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1029, 380);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(1280, 388);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -754,7 +858,6 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(-10, 146);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1057, 368);
@@ -762,10 +865,11 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1050, 562);
+            this.ClientSize = new System.Drawing.Size(1286, 566);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel_chung);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.panel2);
@@ -791,6 +895,7 @@
             this.guna2Panel1.PerformLayout();
             this.panel_chung.ResumeLayout(false);
             this.panel_chung.PerformLayout();
+            this.guna2Panel3.ResumeLayout(false);
             this.panel_size.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).EndInit();
             this.panel_shape.ResumeLayout(false);
@@ -805,8 +910,6 @@
             this.panel_color_picker.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_color)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -869,6 +972,13 @@
         private Guna.UI2.WinForms.Guna2PictureBox pb_brush;
         private System.Windows.Forms.ComboBox cb_brush;
         private System.Windows.Forms.Panel panel1;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
+        private System.Windows.Forms.Button btn_I;
+        private System.Windows.Forms.Button btn_Bold;
+        private System.Windows.Forms.ComboBox cb_TextSize;
+        private System.Windows.Forms.ComboBox cb_Font;
+        private System.Windows.Forms.RichTextBox richTB_text;
+        private System.Windows.Forms.Button btn_underline;
     }
 }
 
