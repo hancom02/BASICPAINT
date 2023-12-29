@@ -17,7 +17,7 @@ namespace BASICPAINT
 {
     public partial class Form1 : Form
     {
-        private Point Start, End;
+        private Point Start, End ,Startp,Endp;
         private List<Triangle> trianglesList;
         Bitmap bm;
         Graphics g;
@@ -26,7 +26,7 @@ namespace BASICPAINT
         Pen pen = new Pen(Color.Black, 1);
         Pen erase = new Pen(Color.White, 10);
         int x, y, sX, sY, cX, cY;
-        int flag;
+        int xp,yp, sXp, sYp, cXp, cYp;
         ColorDialog cd = new ColorDialog();
         Color new_color = Color.Black;
         //Point lastPoint;
@@ -224,40 +224,47 @@ namespace BASICPAINT
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            pictureBox1.Image = ZoomPicture(org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            //org = new PictureBox();
+            //org.Image = pictureBox1.Image;
+            pictureBox1.Image = ZoomPicture(bm ,org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
             isDrawing = true;
-            Start = End = e.Location;
+            Startp = Endp = e.Location;
+            Point a = new Point((int)(1.0 * e.Location.X / (1.0 * trackBarZoom.Value / 100)), (int)(1.0 * e.Location.Y / (1.0 * trackBarZoom.Value / 100)));
             //lastPoint = e.Location;
-            py = e.Location;
-
-            cX = e.X;
-            cY = e.Y;
-           
+            Start = End = a;
+            py = a;
+            cX = a.X;
+            cY = a.Y;
+            cXp = e.X;
+            cYp = e.Y;
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            Point a = new Point((int)(1.0 * e.Location.X / (1.0 * trackBarZoom.Value / 100)), (int)(1.0 * e.Location.Y / (1.0 * trackBarZoom.Value / 100)));
             
             if (e.Button == MouseButtons.Left)
             {
                 if (isDrawing)
                 {
+                    pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
                     if (curTool == TOOL.PEN)
                     {
-                        px = e.Location;
+                        px = a;
                         g.DrawLine(pen, px, py);
                         py = px;
                     }
                     if (curTool == TOOL.ERASER)
                     {
-                        px = e.Location;
+                        px = a;
                         g.DrawLine(erase, px, py);
                         py = px;
                     }
                 }
                 if (curTool == TOOL.TRIANGLE)
                 {
-                    End = e.Location;
+                    End = a;
+                    Endp = e.Location;
                     this.Invalidate();
                 }
                 //if (curTool == TOOL.TRIANGLE)
@@ -269,22 +276,32 @@ namespace BASICPAINT
                 //}
             }
             pictureBox1.Refresh();
-
-            x = e.X;
-            y = e.Y;
-            sX = e.X - cX;
-            sY = e.Y - cY;
+            
+            x = a.X;
+            y = a.Y;
+            xp = e.X;
+            yp = e.Y;
+            sX = a.X - cX;
+            sY = a.Y - cY;
+            sXp = e.X - cXp;
+            sYp = e.Y - cYp;
 
             label1.Text =  e.X + "," + e.Y;
-            pictureBox1.Image = ZoomPicture(org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            //org = new PictureBox();
+            //org.Image = pictureBox1.Image;
+            Point a = new Point((int)(1.0* e.Location.X / (1.0*trackBarZoom.Value / 100)), (int)(1.0 * e.Location.Y / (1.0 * trackBarZoom.Value / 100)));
+            pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
             isDrawing = false;
 
             sX = x - cX;
             sY = y - cY;
+            sXp = xp - cXp;
+            sYp = yp - cYp;
 
             if (curTool == TOOL.ELLIPSE)
             {
@@ -303,7 +320,8 @@ namespace BASICPAINT
                 //Triangle triangle = new Triangle(Start, End);
                 //trianglesList.Add(triangle);
                 //Invalidate();
-                End = e.Location;
+                End = a;
+                Endp = e.Location;
                 this.Invalidate();
                 Point point1 = Start;
                 Point point2 = new Point((Start.X + End.X) / 2, End.Y);
@@ -314,7 +332,7 @@ namespace BASICPAINT
             {
                 DrawText(x, y);
             }
-            pictureBox1.Image = ZoomPicture( org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -323,27 +341,28 @@ namespace BASICPAINT
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             if (isDrawing)
             {
+                
                 if (curTool == TOOL.ELLIPSE)
                 {
-                    g.DrawEllipse(pen, cX, cY, sX, sY);
+                    g.DrawEllipse(pen, cXp, cYp, sXp, sYp);
 
                 }
                 if (curTool == TOOL.RECTANGLE)
                 {
-                    g.DrawRectangle(pen, cX, cY, sX, sY);
+                    g.DrawRectangle(pen, cXp, cYp, sXp, sYp);
                 }
                 if (curTool == TOOL.LINE)
                 {
-                    g.DrawLine(pen, cX, cY, x, y);
+                    g.DrawLine(pen, cXp, cYp, xp, yp);
                 }
                 if (curTool == TOOL.TRIANGLE)
                 {
                     //End = PointToClient(MousePosition);
                     //Triangle triangle = new Triangle(Start, End);
                     //triangle.Draw(g, pen);
-                    Point point1 = Start;
-                    Point point2 = new Point((Start.X + End.X) / 2, End.Y);
-                    Point point3 = End;
+                    Point point1 = Startp;
+                    Point point2 = new Point((Startp.X + Endp.X) / 2, Endp.Y);
+                    Point point3 = Endp;
                     g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
                 }
                 if (curTool == TOOL.TEXT)
@@ -648,9 +667,9 @@ namespace BASICPAINT
         //    }
         //}
         PictureBox org;
-        System.Drawing.Image ZoomPicture( System.Drawing.Image img, Size size)
+        System.Drawing.Image ZoomPicture(Bitmap bm, System.Drawing.Image img, Size size)
         {
-             Bitmap bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
+             bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
                 Convert.ToInt32(img.Height * size.Height)/100);
             Graphics gpu = Graphics.FromImage(bm);
             gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
@@ -663,7 +682,7 @@ namespace BASICPAINT
             if (trackBarZoom.Value != 0)
             {
                 pictureBox1.Image = null;
-                pictureBox1.Image = ZoomPicture(org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+                pictureBox1.Image = ZoomPicture(bm,org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
             }
            
             
@@ -680,7 +699,7 @@ namespace BASICPAINT
                 trackBarZoom.Value = 200;
             }
             labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
-            pictureBox1.Image = ZoomPicture( org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         private void bt_zoom_reduce_Click(object sender, EventArgs e)
@@ -694,7 +713,7 @@ namespace BASICPAINT
                 trackBarZoom.Value = 100;
             }    
             labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
-            pictureBox1.Image = ZoomPicture( org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         
