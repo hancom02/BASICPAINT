@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BASICPAINT
 {
@@ -18,12 +11,19 @@ namespace BASICPAINT
     {
         private Point Start, End;
         private List<Triangle> trianglesList;
+
+        //private List<Point> brushPoints = new List<Point>();
+
         Bitmap bm;
         Graphics g;
         bool isDrawing = false;
         Point px, py;
+
         Pen pen = new Pen(Color.Black, 1);
         Pen erase = new Pen(Color.White, 10);
+        Pen oilBrush = new Pen(new HatchBrush(HatchStyle.Trellis, Color.Red), 15);
+        Pen waterBrush = new Pen(Color.FromArgb(128, Color.Blue), 15);
+
         int x, y, sX, sY, cX, cY;
 
         ColorDialog cd = new ColorDialog();
@@ -32,10 +32,13 @@ namespace BASICPAINT
 
         private Color defaultColor = Color.White; // Màu ban đầu của button
         private Color activeColor = Color.LightBlue; // Màu khi button được kích hoạt
+        private Color brushes_DefaultColor = Color.WhiteSmoke;
 
         private bool isBoldActive = false;
         private bool isItalicActive = false;
         private bool isUnderlineActive = false;
+
+        private bool isBrushesActive = false;
 
         public enum TOOL
         {
@@ -44,6 +47,7 @@ namespace BASICPAINT
             ERASER,
             FILLCOLOR,
             TEXT,
+            BRUSH,
             LINE,
             ELLIPSE,
             RECTANGLE,
@@ -67,6 +71,9 @@ namespace BASICPAINT
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             pen.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+            erase.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+            waterBrush.StartCap = pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+
             bm = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
@@ -74,7 +81,7 @@ namespace BASICPAINT
             trianglesList = new List<Triangle>();
             //pen.Width = (float)pen_width.Value;
             tb_size.Text = pen.Width.ToString();
-            
+
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -100,12 +107,15 @@ namespace BASICPAINT
             {
                 cb_Font.Items.Add(font.Name.ToString());
             }
-            cb_Font.SelectedItem = "Arial";            
+            cb_Font.SelectedItem = "Arial";
             cb_TextSize.SelectedItem = "11";
 
             this.DoubleBuffered = true;
             org = new PictureBox();
             org.Image = pictureBox1.Image;
+
+            cb_brush.SelectedItem = "Hatch brush";
+            pic_color.FillColor = Color.Black;
         }
 
         private void guna2Button2_Click(object sender, EventArgs e)
@@ -168,7 +178,7 @@ namespace BASICPAINT
             curTool = TOOL.FILLCOLOR;
         }
 
-        
+
 
         private void guna2ImageButton2_Click(object sender, EventArgs e)
         {
@@ -218,6 +228,9 @@ namespace BASICPAINT
         private void bt_size_plus_Click(object sender, EventArgs e)
         {
             pen.Width = pen.Width + 1;
+            oilBrush.Width = oilBrush.Width + 1;
+            waterBrush.Width = waterBrush.Width + 1;
+            erase.Width++;
             tb_size.Text = pen.Width.ToString();
         }
 
@@ -241,14 +254,43 @@ namespace BASICPAINT
                     if (curTool == TOOL.PEN)
                     {
                         px = e.Location;
+                        g.SmoothingMode = SmoothingMode.Default;
                         g.DrawLine(pen, px, py);
                         py = px;
                     }
                     if (curTool == TOOL.ERASER)
                     {
                         px = e.Location;
+                        g.SmoothingMode = SmoothingMode.Default;
                         g.DrawLine(erase, px, py);
                         py = px;
+                    }
+                    if (curTool == TOOL.BRUSH)
+                    {
+                        px = e.Location;
+
+                        if (cb_brush.SelectedItem.ToString() == "Hatch brush")
+                        {
+                            //Brush oilBrush = new HatchBrush(HatchStyle.LargeCheckerBoard, new_color);
+                            //brushPoints.Add(e.Location);
+                            //pictureBox1.Invalidate();
+
+                            g.SmoothingMode = SmoothingMode.AntiAlias;
+                            oilBrush.Color = new_color;
+                            g.DrawLine(oilBrush, px, py);
+                            py = px;
+
+                        }
+                        else if (cb_brush.SelectedItem.ToString() == "Water color")
+                        {
+                            //Brush oilBrush = new HatchBrush(HatchStyle.LargeCheckerBoard, new_color);
+
+                            g.SmoothingMode = SmoothingMode.AntiAlias;
+                            waterBrush.Color = Color.FromArgb(128, new_color);
+                            g.DrawLine(waterBrush, px, py);
+                            py = px;
+                        }
+
                     }
                 }
                 if (curTool == TOOL.TRIANGLE)
@@ -263,6 +305,7 @@ namespace BASICPAINT
                 //    Point point3 = new Point() { X = startPointX + shapeWidth, Y = startPointY + shapeHeight };
                 //    g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
                 //}
+               // pictureBox1.Refresh();
             }
             pictureBox1.Refresh();
 
@@ -271,8 +314,9 @@ namespace BASICPAINT
             sX = e.X - cX;
             sY = e.Y - cY;
 
-            label1.Text =  e.X + "," + e.Y;
-            
+            label1.Text = e.X + "," + e.Y;
+
+            pictureBox1.Refresh();
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -310,6 +354,11 @@ namespace BASICPAINT
             {
                 DrawText(x, y);
             }
+            if (curTool == TOOL.BRUSH)
+            {
+
+            }
+            pictureBox1.Refresh();
             pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
@@ -321,6 +370,7 @@ namespace BASICPAINT
             {
                 if (curTool == TOOL.ELLIPSE)
                 {
+                    g.SmoothingMode = SmoothingMode.HighSpeed;
                     g.DrawEllipse(pen, cX, cY, sX, sY);
 
                 }
@@ -346,20 +396,38 @@ namespace BASICPAINT
                 {
                     DrawText(x, y);
                 }
+                //if (curTool == TOOL.BRUSH)
+                //{
+                //    if (cb_brush.SelectedItem.ToString() == "Oil")
+                //    {
+                //        g.SmoothingMode = SmoothingMode.HighQuality;
+                //        oilBrush.Color = new_color;
+                //        g.DrawLine(oilBrush, cX, cY, x, y);
+
+                //        //if (brushPoints.Count > 1)
+                //        //{                           
+                //        //        g.DrawLines(oilBrush, brushPoints.ToArray());                         
+                //        //}
+                //    }
+                //    else if (cb_brush.SelectedItem.ToString() == "Water color")
+                //    {
+                //        g.SmoothingMode = SmoothingMode.AntiAlias;
+                //        oilBrush.Color = new_color;
+                //        g.DrawLine(oilBrush, cX, cY, x, y);
+                //    }
+                //}
             }
-            //foreach (var triangle in trianglesList)
-            //{
-            //    triangle.Draw(g, pen);
-            //}
-            
+            //pictureBox1.Refresh();
+
         }
 
         private void DrawText(int x, int y)
         {
-           Font font = richTB_text.Font;
-           Brush brush = new SolidBrush(new_color);
+            Font font = richTB_text.Font;
+            Brush brush = new SolidBrush(new_color);
 
-           g.DrawString(richTB_text.Text, font, brush, x, y);
+
+            g.DrawString(richTB_text.Text, font, brush, x, y);
         }
 
         private void guna2ImageButton2_Click_1(object sender, EventArgs e)
@@ -435,7 +503,7 @@ namespace BASICPAINT
             }
             if (curTool == TOOL.TEXT)
             {
-
+                DrawText(x, y);
 
             }
         }
@@ -520,7 +588,7 @@ namespace BASICPAINT
                 sdf.Filter = "Image(*.png)|*.png";
                 if (sdf.ShowDialog() == DialogResult.OK)
                 {
-                    Bitmap btm = bm.Clone(new Rectangle(0, 0,pictureBox1.Width, pictureBox1.Height), bm.PixelFormat);
+                    Bitmap btm = bm.Clone(new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height), bm.PixelFormat);
                     btm.Save(sdf.FileName, ImageFormat.Png);
                     MessageBox.Show("Image Saved Sucessully");
                 }
@@ -534,12 +602,15 @@ namespace BASICPAINT
 
         private void tb_size_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void bt_size_reduce_Click(object sender, EventArgs e)
         {
             pen.Width = pen.Width - 1;
+            oilBrush.Width = oilBrush.Width - 1;
+            waterBrush.Width = waterBrush.Width - 1;
+            erase.Width--;
             tb_size.Text = pen.Width.ToString();
         }
 
@@ -553,11 +624,11 @@ namespace BASICPAINT
             {
                 saveToolStripMenuItem.PerformClick();
             }
-           
-                g.Clear(Color.White);
-                pictureBox1.Image = bm;
-                curTool = TOOL.SELECT;
-            
+
+            g.Clear(Color.White);
+            pictureBox1.Image = bm;
+            curTool = TOOL.SELECT;
+
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -576,11 +647,11 @@ namespace BASICPAINT
             Form1.ActiveForm.Close();
         }
 
-        
+
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+
             string message = "Do you want to save currrent drawing?";
             string title = "Close Window";
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
@@ -640,12 +711,12 @@ namespace BASICPAINT
         PictureBox org;
         System.Drawing.Image ZoomPicture(Bitmap bm, System.Drawing.Image img, Size size)
         {
-             bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
-                Convert.ToInt32(img.Height * size.Height)/100);
+            bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width) / 100,
+               Convert.ToInt32(img.Height * size.Height) / 100);
             Graphics gpu = Graphics.FromImage(bm);
             gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             return bm;
-            
+
         }
         private void trackBarZoom_Scroll(object sender, EventArgs e)
         {
@@ -653,10 +724,10 @@ namespace BASICPAINT
             if (trackBarZoom.Value != 0)
             {
                 pictureBox1.Image = null;
-                pictureBox1.Image = ZoomPicture(bm,org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+                pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
             }
-           
-            
+
+
         }
 
         private void bt_zoom_plus_Click(object sender, EventArgs e)
@@ -681,11 +752,43 @@ namespace BASICPAINT
             else
             {
                 trackBarZoom.Value = 100;
-            }    
+            }
             labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
         }
 
-        
+        private void pb_brush_Click(object sender, EventArgs e)
+        {
+            isBrushesActive = !isBrushesActive;
+
+            panel_brush.BackColor = isBrushesActive ? activeColor : brushes_DefaultColor;
+
+            curTool = TOOL.BRUSH;
+        }
+
+        private void panel_brush_Click(object sender, EventArgs e)
+        {
+            isBrushesActive = !isBrushesActive;
+
+            panel_brush.BackColor = isBrushesActive ? activeColor : brushes_DefaultColor;
+
+            curTool = TOOL.BRUSH;
+        }
+
+        private void cb_Font_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string fontName = cb_Font.SelectedItem.ToString();
+            Font selectedFont = new Font(fontName, richTB_text.Font.Size, richTB_text.Font.Style);
+
+            richTB_text.Font = selectedFont;
+        }
+
+        private void cb_TextSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            float size = float.Parse(cb_TextSize.SelectedItem.ToString());
+
+            richTB_text.Font = new Font(cb_TextSize.SelectedItem.ToString(), size, richTB_text.Font.Style);
+        }
+
         private void guna2PictureBox2_Click_1(object sender, EventArgs e)
         {
 

@@ -135,7 +135,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1286, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1286, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -299,7 +299,7 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 30);
+            this.panel_chung.Location = new System.Drawing.Point(0, 28);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1286, 107);
             this.panel_chung.TabIndex = 6;
@@ -390,6 +390,7 @@
             this.cb_TextSize.Size = new System.Drawing.Size(47, 24);
             this.cb_TextSize.TabIndex = 1;
             this.cb_TextSize.Text = "11";
+            this.cb_TextSize.SelectedIndexChanged += new System.EventHandler(this.cb_TextSize_SelectedIndexChanged);
             // 
             // cb_Font
             // 
@@ -400,6 +401,7 @@
             this.cb_Font.Size = new System.Drawing.Size(146, 24);
             this.cb_Font.TabIndex = 0;
             this.cb_Font.Text = "Select Font";
+            this.cb_Font.SelectedIndexChanged += new System.EventHandler(this.cb_Font_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -518,9 +520,9 @@
             this.panel_shape.BorderThickness = 1;
             this.panel_shape.Controls.Add(this.panel_shape_sub);
             this.panel_shape.Controls.Add(this.guna2Panel2);
-            this.panel_shape.Location = new System.Drawing.Point(325, 0);
+            this.panel_shape.Location = new System.Drawing.Point(337, 0);
             this.panel_shape.Name = "panel_shape";
-            this.panel_shape.Size = new System.Drawing.Size(202, 82);
+            this.panel_shape.Size = new System.Drawing.Size(190, 82);
             this.panel_shape.TabIndex = 4;
             this.panel_shape.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_shape_Paint);
             // 
@@ -531,7 +533,7 @@
             this.panel_shape_sub.Controls.Add(this.guna2ImageButton1);
             this.panel_shape_sub.Controls.Add(this.bt_square);
             this.panel_shape_sub.Controls.Add(this.bt_elip);
-            this.panel_shape_sub.Location = new System.Drawing.Point(16, 12);
+            this.panel_shape_sub.Location = new System.Drawing.Point(5, 11);
             this.panel_shape_sub.Name = "panel_shape_sub";
             this.panel_shape_sub.Size = new System.Drawing.Size(171, 45);
             this.panel_shape_sub.TabIndex = 1;
@@ -610,19 +612,20 @@
             this.panel_brush.BorderThickness = 1;
             this.panel_brush.Controls.Add(this.cb_brush);
             this.panel_brush.Controls.Add(this.pb_brush);
-            this.panel_brush.Location = new System.Drawing.Point(255, 0);
+            this.panel_brush.Location = new System.Drawing.Point(264, 5);
             this.panel_brush.Name = "panel_brush";
-            this.panel_brush.Size = new System.Drawing.Size(71, 82);
+            this.panel_brush.Size = new System.Drawing.Size(67, 77);
             this.panel_brush.TabIndex = 3;
+            this.panel_brush.Click += new System.EventHandler(this.panel_brush_Click);
             // 
             // cb_brush
             // 
             this.cb_brush.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_brush.FormattingEnabled = true;
             this.cb_brush.Items.AddRange(new object[] {
-            "Oil ",
+            "Hatch brush",
             "Water color"});
-            this.cb_brush.Location = new System.Drawing.Point(3, 52);
+            this.cb_brush.Location = new System.Drawing.Point(0, 49);
             this.cb_brush.Name = "cb_brush";
             this.cb_brush.Size = new System.Drawing.Size(64, 24);
             this.cb_brush.TabIndex = 2;
@@ -632,12 +635,13 @@
             // 
             this.pb_brush.Image = ((System.Drawing.Image)(resources.GetObject("pb_brush.Image")));
             this.pb_brush.ImageRotate = 0F;
-            this.pb_brush.Location = new System.Drawing.Point(18, 9);
+            this.pb_brush.Location = new System.Drawing.Point(19, 6);
             this.pb_brush.Name = "pb_brush";
             this.pb_brush.Size = new System.Drawing.Size(30, 40);
             this.pb_brush.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_brush.TabIndex = 1;
             this.pb_brush.TabStop = false;
+            this.pb_brush.Click += new System.EventHandler(this.pb_brush_Click);
             // 
             // panel_tool
             // 
