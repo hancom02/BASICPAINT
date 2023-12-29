@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
@@ -25,7 +26,7 @@ namespace BASICPAINT
         Pen pen = new Pen(Color.Black, 1);
         Pen erase = new Pen(Color.White, 10);
         int x, y, sX, sY, cX, cY;
-
+        int flag;
         ColorDialog cd = new ColorDialog();
         Color new_color = Color.Black;
         //Point lastPoint;
@@ -223,6 +224,7 @@ namespace BASICPAINT
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
+            pictureBox1.Image = ZoomPicture(org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
             isDrawing = true;
             Start = End = e.Location;
             //lastPoint = e.Location;
@@ -230,10 +232,12 @@ namespace BASICPAINT
 
             cX = e.X;
             cY = e.Y;
+           
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            
             if (e.Button == MouseButtons.Left)
             {
                 if (isDrawing)
@@ -272,7 +276,7 @@ namespace BASICPAINT
             sY = e.Y - cY;
 
             label1.Text =  e.X + "," + e.Y;
-            
+            pictureBox1.Image = ZoomPicture(org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -310,7 +314,7 @@ namespace BASICPAINT
             {
                 DrawText(x, y);
             }
-            pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+            pictureBox1.Image = ZoomPicture( org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -517,11 +521,11 @@ namespace BASICPAINT
             if (pictureBox1.Image != null)
             {
                 var sdf = new SaveFileDialog();
-                sdf.Filter = "Image(*.png)|*.png";
+                sdf.Filter = "Image(*.jpeg)|*.jpeg";
                 if (sdf.ShowDialog() == DialogResult.OK)
                 {
                     Bitmap btm = bm.Clone(new Rectangle(0, 0,pictureBox1.Width, pictureBox1.Height), bm.PixelFormat);
-                    btm.Save(sdf.FileName, ImageFormat.Png);
+                    btm.Save(sdf.FileName, ImageFormat.Jpeg);
                     MessageBox.Show("Image Saved Sucessully");
                 }
                 else if (pictureBox1.Image == null)
@@ -555,8 +559,10 @@ namespace BASICPAINT
             }
            
                 g.Clear(Color.White);
-                pictureBox1.Image = bm;
-                curTool = TOOL.SELECT;
+            pictureBox1.Image = bm;
+            org = new PictureBox();
+            org.Image = pictureBox1.Image;
+            curTool = TOOL.SELECT;
             
         }
 
@@ -566,9 +572,13 @@ namespace BASICPAINT
             ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
 
             if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                pictureBox1.ImageLocation = ofd.FileName;
+            { 
+                org = new PictureBox();
+                org.Load(ofd.FileName);
+                pictureBox1.Load(ofd.FileName);
+                
             }
+            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -638,9 +648,9 @@ namespace BASICPAINT
         //    }
         //}
         PictureBox org;
-        System.Drawing.Image ZoomPicture(Bitmap bm, System.Drawing.Image img, Size size)
+        System.Drawing.Image ZoomPicture( System.Drawing.Image img, Size size)
         {
-             bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
+             Bitmap bm = new Bitmap(img, Convert.ToInt32(img.Width * size.Width)/100,
                 Convert.ToInt32(img.Height * size.Height)/100);
             Graphics gpu = Graphics.FromImage(bm);
             gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
@@ -653,7 +663,7 @@ namespace BASICPAINT
             if (trackBarZoom.Value != 0)
             {
                 pictureBox1.Image = null;
-                pictureBox1.Image = ZoomPicture(bm,org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
+                pictureBox1.Image = ZoomPicture(org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
             }
            
             
@@ -670,6 +680,7 @@ namespace BASICPAINT
                 trackBarZoom.Value = 200;
             }
             labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+            pictureBox1.Image = ZoomPicture( org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         private void bt_zoom_reduce_Click(object sender, EventArgs e)
@@ -683,6 +694,7 @@ namespace BASICPAINT
                 trackBarZoom.Value = 100;
             }    
             labelZoomPercent.Text = trackBarZoom.Value.ToString() + "%";
+            pictureBox1.Image = ZoomPicture( org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
         }
 
         
