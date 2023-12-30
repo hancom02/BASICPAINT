@@ -392,10 +392,10 @@ namespace BASICPAINT
                     Point point3 = End;
                     g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
                 }
-                if (curTool == TOOL.TEXT)
-                {
-                    DrawText(x, y);
-                }
+                //if (curTool == TOOL.TEXT)
+                //{
+                //    DrawText(x, y);
+                //}
                 //if (curTool == TOOL.BRUSH)
                 //{
                 //    if (cb_brush.SelectedItem.ToString() == "Oil")
