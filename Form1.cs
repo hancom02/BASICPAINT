@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Reflection;
@@ -23,20 +24,28 @@ namespace BASICPAINT
         Graphics g;
         bool isDrawing = false;
         Point px, py;
+
         Pen pen = new Pen(Color.Black, 1);
         Pen erase = new Pen(Color.White, 10);
+        Pen oilBrush = new Pen(new HatchBrush(HatchStyle.Trellis, Color.Red), 15);
+        Pen waterBrush = new Pen(Color.FromArgb(128, Color.Blue), 20);
+
         int x, y, sX, sY, cX, cY;
         int xp,yp, sXp, sYp, cXp, cYp;
+
         ColorDialog cd = new ColorDialog();
         Color new_color = Color.Black;
         //Point lastPoint;
 
         private Color defaultColor = Color.White; // Màu ban đầu của button
         private Color activeColor = Color.LightBlue; // Màu khi button được kích hoạt
+        private Color brushes_DefaultColor = Color.WhiteSmoke;
 
         private bool isBoldActive = false;
         private bool isItalicActive = false;
         private bool isUnderlineActive = false;
+
+        private bool isBrushesActive = false;
 
         public enum TOOL
         {
@@ -44,6 +53,7 @@ namespace BASICPAINT
             PEN,
             ERASER,
             FILLCOLOR,
+            BRUSH,
             TEXT,
             LINE,
             ELLIPSE,
@@ -52,12 +62,12 @@ namespace BASICPAINT
         }
         public TOOL curTool = TOOL.SELECT;
 
-        public enum CREATE_TEXT
-        {
-            YES,
-            NO,
-        }
-        public CREATE_TEXT curCreateText = CREATE_TEXT.YES;
+        //public enum CREATE_TEXT
+        //{
+        //    YES,
+        //    NO,
+        //}
+        //public CREATE_TEXT curCreateText = CREATE_TEXT.YES;
 
         public Form1()
         {
@@ -68,6 +78,10 @@ namespace BASICPAINT
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             pen.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+            //erase.SetLineCap(System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.LineCap.Round, System.Drawing.Drawing2D.DashCap.Round);
+            erase.SetLineCap(LineCap.Square, LineCap.Square, DashCap.Round);
+            waterBrush.StartCap = pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+
             bm = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
@@ -107,6 +121,9 @@ namespace BASICPAINT
             this.DoubleBuffered = true;
             org = new PictureBox();
             org.Image = pictureBox1.Image;
+
+            cb_brush.SelectedItem = "Hatch brush";
+            pic_color.FillColor = Color.Black;
         }
 
         private void guna2Button2_Click(object sender, EventArgs e)
@@ -162,11 +179,15 @@ namespace BASICPAINT
         private void guna2ImageButton1_Click(object sender, EventArgs e)
         {
             curTool = TOOL.LINE;
+
+            panel_brush.BackColor = brushes_DefaultColor;
         }
 
         private void guna2PictureBox2_Click(object sender, EventArgs e)
         {
             curTool = TOOL.FILLCOLOR;
+
+            panel_brush.BackColor = brushes_DefaultColor;
         }
 
         
@@ -179,6 +200,8 @@ namespace BASICPAINT
         private void guna2ImageButton3_Click(object sender, EventArgs e)
         {
             curTool = TOOL.ERASER;
+
+            panel_brush.BackColor = brushes_DefaultColor;
         }
 
         private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -199,6 +222,8 @@ namespace BASICPAINT
         private void guna2ImageButton4_Click(object sender, EventArgs e)
         {
             curTool = TOOL.ELLIPSE;
+
+            panel_brush.BackColor = brushes_DefaultColor;
         }
 
         private void guna2Panel3_Paint(object sender, PaintEventArgs e)
@@ -209,6 +234,8 @@ namespace BASICPAINT
         private void guna2ImageButton1_Click_2(object sender, EventArgs e)
         {
             curTool = TOOL.RECTANGLE;
+
+            panel_brush.BackColor = brushes_DefaultColor;
         }
 
         private void guna2ImageButton1_Click_3(object sender, EventArgs e)
@@ -219,6 +246,10 @@ namespace BASICPAINT
         private void bt_size_plus_Click(object sender, EventArgs e)
         {
             pen.Width = pen.Width + 1;
+            oilBrush.Width = oilBrush.Width + 1;
+            waterBrush.Width = waterBrush.Width + 1;
+            erase.Width++;
+
             tb_size.Text = pen.Width.ToString();
         }
 
@@ -259,6 +290,33 @@ namespace BASICPAINT
                         px = a;
                         g.DrawLine(erase, px, py);
                         py = px;
+                    }
+                    if (curTool == TOOL.BRUSH)
+                    {
+                        px = a;
+
+                        if (cb_brush.SelectedItem.ToString() == "Hatch brush")
+                        {
+                            //Brush oilBrush = new HatchBrush(HatchStyle.LargeCheckerBoard, new_color);
+                            //brushPoints.Add(e.Location);
+                            //pictureBox1.Invalidate();
+
+                            g.SmoothingMode = SmoothingMode.AntiAlias;
+                            oilBrush.Color = new_color;
+                            g.DrawLine(oilBrush, px, py);
+                            py = px;
+
+                        }
+                        else if (cb_brush.SelectedItem.ToString() == "Water color")
+                        {
+                            //Brush oilBrush = new HatchBrush(HatchStyle.LargeCheckerBoard, new_color);
+
+                            g.SmoothingMode = SmoothingMode.AntiAlias;
+                            waterBrush.Color = Color.FromArgb(128, new_color);
+                            g.DrawLine(waterBrush, px, py);
+                            py = px;
+                        }
+
                     }
                 }
                 if (curTool == TOOL.TRIANGLE)
@@ -365,10 +423,10 @@ namespace BASICPAINT
                     Point point3 = Endp;
                     g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
                 }
-                if (curTool == TOOL.TEXT)
-                {
-                    DrawText(x, y);
-                }
+                //if (curTool == TOOL.TEXT)
+                //{
+                //    DrawText(x, y);
+                //}
             }
             //foreach (var triangle in trianglesList)
             //{
@@ -388,11 +446,15 @@ namespace BASICPAINT
         private void guna2ImageButton2_Click_1(object sender, EventArgs e)
         {
             curTool = TOOL.TRIANGLE;
+
+            panel_brush.BackColor = brushes_DefaultColor;
         }
 
         private void bt_pencil_Click(object sender, EventArgs e)
         {
             curTool = TOOL.PEN;
+
+            panel_brush.BackColor = brushes_DefaultColor;
         }
         static Point set_point(PictureBox pb, Point pt)
         {
@@ -466,6 +528,8 @@ namespace BASICPAINT
         private void bt_text_Click(object sender, EventArgs e)
         {
             curTool = TOOL.TEXT;
+
+            panel_brush.BackColor = brushes_DefaultColor;
 
         }
 
@@ -563,6 +627,10 @@ namespace BASICPAINT
         private void bt_size_reduce_Click(object sender, EventArgs e)
         {
             pen.Width = pen.Width - 1;
+            oilBrush.Width = oilBrush.Width - 1;
+            waterBrush.Width = waterBrush.Width - 1;
+            erase.Width--;
+
             tb_size.Text = pen.Width.ToString();
         }
 
@@ -619,6 +687,56 @@ namespace BASICPAINT
                 saveToolStripMenuItem.PerformClick();
             }
             Application.Exit();
+        }
+
+        private void pb_brush_Click(object sender, EventArgs e)
+        {
+            isBrushesActive = !isBrushesActive;
+
+            panel_brush.BackColor = isBrushesActive ? activeColor : brushes_DefaultColor;
+
+            if (isBrushesActive)
+            {
+                curTool = TOOL.BRUSH;
+                panel_brush.BackColor = activeColor;
+            }
+            else panel_brush.BackColor = brushes_DefaultColor;
+        }
+
+        private void panel_brush_Click(object sender, EventArgs e)
+        {
+            isBrushesActive = !isBrushesActive;
+
+            panel_brush.BackColor = isBrushesActive ? activeColor : brushes_DefaultColor;
+
+            if (isBrushesActive)
+            {
+                curTool = TOOL.BRUSH;
+            }
+        }
+
+        private void cb_Font_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Font newFont = new Font(cb_Font.SelectedItem.ToString(), richTB_text.Font.Size);
+
+            richTB_text.Font = newFont;
+        }
+
+        private void cb_TextSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Font newFont = new Font(cb_Font.SelectedItem.ToString(), float.Parse(cb_TextSize.SelectedItem.ToString()));
+
+            richTB_text.Font = newFont;
+        }
+
+        private void cb_brush_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            curTool = TOOL.BRUSH;
+        }
+
+        private void cb_brush_Click(object sender, EventArgs e)
+        {
+            panel_brush.BackColor = activeColor;
         }
 
         static Point set_Point(PictureBox pb, Point pt)
