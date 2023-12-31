@@ -57,14 +57,14 @@ namespace BASICPAINT
         private bool isUnderlineActive = false;
 
         //Dùng cho SELECT
-        GraphicsPath select_Path = new GraphicsPath();
-        List<Rectangle> select_RectList = new List<Rectangle>();
-        bool isUsingSelect = false;
+        Rectangle selectRecArea = new Rectangle(); /* vùng mà user chọn ra*/
 
 
-        Rectangle selectRecArea = new Rectangle();
-        Rectangle selectRecArea2 = new Rectangle();
-        private bool isRegionDeleted = false;
+        //GraphicsPath select_Path = new GraphicsPath();
+        //List<Rectangle> select_RectList = new List<Rectangle>();
+        //bool isUsingSelect = false;
+        //Rectangle selectRecArea2 = new Rectangle();
+        //private bool isRegionDeleted = false;
 
         public enum TOOL
         {
@@ -86,7 +86,7 @@ namespace BASICPAINT
         }
         public TOOL curTool = TOOL.SELECT;
 
-        public enum SELECT
+        public enum SELECT /* Cho các chức năng con của SELECT */
         {
             SELECT_AREA,
             DELETE,
@@ -1030,7 +1030,7 @@ namespace BASICPAINT
         {
             curTool = TOOL.SELECT;
             curSelect = SELECT.SELECT_AREA;
-            isUsingSelect = !isUsingSelect;
+            //isUsingSelect = !isUsingSelect;
 
             panel_brush.BackColor = brushes_DefaultColor;
         }
@@ -1071,7 +1071,7 @@ namespace BASICPAINT
                 Debug.WriteLine("Có selectArea: " + selectRecArea.ToString());
                 Debug.WriteLine(gPaint.ToString());
 
-                isRegionDeleted = true;
+                //isRegionDeleted = true;
                 curTool = TOOL.SELECT;
                 curSelect = SELECT.DELETE;
 
