@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -10,8 +11,11 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using static Guna.UI2.Native.WinApi;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BASICPAINT
@@ -22,7 +26,11 @@ namespace BASICPAINT
         private List<Triangle> trianglesList;
         Bitmap bm;
         Graphics g;
+        Graphics gPaint;
+
         bool isDrawing = false;
+        bool isSelected = false; /* Dùng để xem đã chọn vùng nào chưa (SELECT)*/
+
         Point px, py;
 
         Pen pen = new Pen(Color.Black, 1);
@@ -37,19 +45,35 @@ namespace BASICPAINT
         Color new_color = Color.Black;
         //Point lastPoint;
 
+        //Dùng cho BRUSH
+        private bool isBrushesActive = false;
         private Color defaultColor = Color.White; // Màu ban đầu của button
         private Color activeColor = Color.LightBlue; // Màu khi button được kích hoạt
         private Color brushes_DefaultColor = Color.WhiteSmoke;
 
+        //Dùng cho  TEXT
         private bool isBoldActive = false;
         private bool isItalicActive = false;
         private bool isUnderlineActive = false;
 
-        private bool isBrushesActive = false;
+        //Dùng cho SELECT
+        GraphicsPath select_Path = new GraphicsPath();
+        List<Rectangle> select_RectList = new List<Rectangle>();
+        bool isUsingSelect = false;
+
+
+        Rectangle selectRecArea = new Rectangle();
+        Rectangle selectRecArea2 = new Rectangle();
+        private bool isRegionDeleted = false;
 
         public enum TOOL
         {
             SELECT,
+            ROTATE,
+            ROTATE_RIGHT_90,
+            ROTATE_LEFT_90,
+            ROTATE_180,
+            DELETE_SELECT,
             PEN,
             ERASER,
             FILLCOLOR,
@@ -62,12 +86,18 @@ namespace BASICPAINT
         }
         public TOOL curTool = TOOL.SELECT;
 
-        //public enum CREATE_TEXT
-        //{
-        //    YES,
-        //    NO,
-        //}
-        //public CREATE_TEXT curCreateText = CREATE_TEXT.YES;
+        public enum SELECT
+        {
+            SELECT_AREA,
+            DELETE,
+            ROTATE_RIGHT_90,
+            ROTATE_LEFT_90,
+            ROTATE_180,
+            FLIP_HORIZAONTAL,
+            FLIP_VERTICAL,
+            
+        }
+        public SELECT curSelect = SELECT.DELETE;
 
         public Form1()
         {
@@ -124,6 +154,8 @@ namespace BASICPAINT
 
             cb_brush.SelectedItem = "Hatch brush";
             pic_color.FillColor = Color.Black;
+
+            //cb_rotate.SelectedItem = "Rotate right 90";
         }
 
         private void guna2Button2_Click(object sender, EventArgs e)
@@ -268,10 +300,13 @@ namespace BASICPAINT
             cY = a.Y;
             cXp = e.X;
             cYp = e.Y;
+
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            Debug.WriteLine("VÔ EVEN MOUSE MOVE");
+
             Point a = new Point((int)(1.0 * e.Location.X / (1.0 * trackBarZoom.Value / 100)), (int)(1.0 * e.Location.Y / (1.0 * trackBarZoom.Value / 100)));
             
             if (e.Button == MouseButtons.Left)
@@ -341,8 +376,8 @@ namespace BASICPAINT
             yp = e.Y;
             sX = a.X - cX;
             sY = a.Y - cY;
-            sXp = e.X - cXp;
-            sYp = e.Y - cYp;
+            sXp = Math.Abs(e.X - cXp);
+            sYp = Math.Abs(e.Y - cYp);
 
             label1.Text =  e.X + "," + e.Y;
             pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
@@ -355,11 +390,13 @@ namespace BASICPAINT
             Point a = new Point((int)(1.0* e.Location.X / (1.0*trackBarZoom.Value / 100)), (int)(1.0 * e.Location.Y / (1.0 * trackBarZoom.Value / 100)));
             pictureBox1.Image = ZoomPicture(bm, org.Image, new Size(trackBarZoom.Value, trackBarZoom.Value));
             isDrawing = false;
+            
+            //isSelecting = false;
 
             sX = x - cX;
             sY = y - cY;
-            sXp = xp - cXp;
-            sYp = yp - cYp;
+            sXp = Math.Abs(xp - cXp);
+            sYp = Math.Abs(yp - cYp);
 
             if (curTool == TOOL.ELLIPSE)
             {
@@ -391,48 +428,294 @@ namespace BASICPAINT
                 DrawText(x, y);
             }
             
+            if (curTool == TOOL.SELECT)
+            {
+                if (curSelect == SELECT.SELECT_AREA && !isSelected)
+                {
+                    Pen selectPen = new Pen(Color.Gray)
+                    {
+                        DashStyle = DashStyle.Dash,
+                    };
+                    Rectangle rec = new Rectangle(cXp, cYp, sXp, sYp);
+                    selectRecArea = rec;
+                    //selectRecArea2.Inflate(1, 1);
+                    //select_RectList.Add(rec);
+
+                    g.DrawRectangle(selectPen, rec);
+
+                    //select_Path.AddRectangle(rec);
+
+                    //Pen selectionPen = new Pen(Color.Red, 2);
+                    //gPaint.DrawPath(selectionPen, select_Path);
+
+
+
+                    //Chọn vùng được chuột di chuyển
+                   
+                    //select_RectList.Add(selectRecArea);
+
+                    //Đã chọn một vùng
+                    isSelected = true;
+
+                    pictureBox1.Invalidate(selectRecArea);
+
+                }
+                if (curSelect == SELECT.SELECT_AREA && isSelected)
+                {
+                    //Xóa vùng cũ
+
+
+                    //Vẽ vùng mới
+                    Pen selectPen = new Pen(Color.Gray)
+                    {
+                        DashStyle = DashStyle.Dash,
+                    };
+                    Rectangle rec = new Rectangle(cXp, cYp, sXp, sYp);
+                    selectRecArea = rec;
+                    //selectRecArea2.Inflate(1, 1);
+
+                    g.DrawRectangle(selectPen, rec);
+
+                    //select_Path.AddRectangle(rec);
+
+                    //Pen selectionPen = new Pen(Color.Red, 2);
+                    //gPaint.DrawPath(selectionPen, select_Path);
+
+                    //Chọn vùng được chuột di chuyển
+                   
+                    //select_RectList.Add(selectRecArea);
+
+                    pictureBox1.Invalidate(selectRecArea);
+
+                    //g.FillRectangle(Brushes.White, selectRecArea);
+                }
+                //if (curSelect == SELECT.FLIP_HORIZAONTAL && cb_rotate.SelectedItem.ToString() == "Flip horizontal")
+                //{
+                //    Debug.WriteLine("VÔ HÀM MOUSE UP CỦA FLIP");
+
+                //    selectRecArea.X = selectRecArea.X + selectRecArea.Width;
+                //    selectRecArea.Width = -selectRecArea.Width;
+
+                //    pictureBox1.Invalidate(selectRecArea);
+                //}
+            }
+
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
+            Debug.WriteLine("VÔ EVEN PAINT CỦA PICTURE BOX");
+
+            gPaint = e.Graphics;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             if (isDrawing)
             {
                 
                 if (curTool == TOOL.ELLIPSE)
                 {
-                    g.DrawEllipse(pen, cXp, cYp, sXp, sYp);
+                    gPaint.DrawEllipse(pen, cXp, cYp, sXp, sYp);
 
                 }
                 if (curTool == TOOL.RECTANGLE)
                 {
-                    g.DrawRectangle(pen, cXp, cYp, sXp, sYp);
+                    gPaint.DrawRectangle(pen, cXp, cYp, sXp, sYp);
                 }
                 if (curTool == TOOL.LINE)
                 {
-                    g.DrawLine(pen, cXp, cYp, xp, yp);
+                    gPaint.DrawLine(pen, cXp, cYp, xp, yp);
                 }
                 if (curTool == TOOL.TRIANGLE)
-                {
-                    //End = PointToClient(MousePosition);
-                    //Triangle triangle = new Triangle(Start, End);
-                    //triangle.Draw(g, pen);
+                {                   
                     Point point1 = Startp;
                     Point point2 = new Point((Startp.X + Endp.X) / 2, Endp.Y);
                     Point point3 = Endp;
-                    g.DrawPolygon(pen, new Point[] { point1, point2, point3 });
+                    gPaint.DrawPolygon(pen, new Point[] { point1, point2, point3 });
                 }
-                //if (curTool == TOOL.TEXT)
-                //{
-                //    DrawText(x, y);
-                //}
-            }
-            //foreach (var triangle in trianglesList)
-            //{
-            //    triangle.Draw(g, pen);
-            //}
-            
+               
+                if (curTool == TOOL.SELECT)
+                {
+                    if (curSelect == SELECT.SELECT_AREA && !isSelected)
+                    {
+                        Pen selectPen = new Pen(Color.Gray)
+                        {
+                            DashStyle = DashStyle.Dash,
+                        };
+                        Rectangle rec = new Rectangle(cXp, cYp, sXp, sYp);
+                        selectRecArea = rec;
+                        //selectRecArea.Inflate(1, 1);
+                        //select_RectList.Add(rec);
+
+                        gPaint.DrawRectangle(selectPen, rec);                        
+                        //Chọn vùng được chuột di chuyển
+                        
+
+                        //Log ra area
+                        Debug.WriteLine(selectRecArea.ToString());
+
+                        //Đã chọn một vùng
+                        isSelected = true;
+
+                        pictureBox1.Invalidate(selectRecArea);
+                                                        
+                    }
+                    if (curSelect == SELECT.SELECT_AREA && isSelected)
+                    {
+                        //Xóa vùng cũ
+                        //Brush brush = Brushes.White;
+                        //g.FillRectangle(brush, selectRecArea);
+                        //selectRecArea = Rectangle.Empty;
+
+                        //Vẽ vùng mới
+                        Pen selectPen = new Pen(Color.Gray)
+                        {
+                            DashStyle = DashStyle.Dash,
+                        };
+                        Rectangle rec = new Rectangle(cXp, cYp, sXp, sYp);
+                        selectRecArea = rec;
+                        //selectRecArea.Inflate(1, 1);
+                        //select_RectList.Add(rec);
+
+                        gPaint.DrawRectangle(selectPen, rec);
+                                                
+                        //Chọn vùng được chuột di chuyển                        
+
+                        Debug.WriteLine(selectRecArea.ToString());
+
+                        pictureBox1.Invalidate(selectRecArea);
+
+
+                        //g.FillRectangle(Brushes.White, selectRecArea);
+                    }
+                    //if (isRegionDeleted && curSelect == SELECT.DELETE)
+                    //{
+                    //    Debug.WriteLine("ĐANG TRONG HÀM DELETE SELECT");
+                    //    foreach (Rectangle rect in select_RectList)
+                    //    {
+                    //        g.FillRectangle(Brushes.White, rect);
+                    //    }
+                    //    pictureBox1.Refresh();
+                    //}
+                    if ((curSelect == SELECT.DELETE))
+                    {
+
+                    }
+                    if (curSelect == SELECT.FLIP_HORIZAONTAL && cb_rotate.SelectedItem.ToString() == "Flip horizontal")
+                    {
+                        Debug.WriteLine("Vô hàm paint của flip_horizontal");
+
+                        if (selectRecArea != Rectangle.Empty)
+                        {
+                            // Tạo một hình ảnh mới với kích thước tương ứng
+                            Bitmap rotatedImage = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+
+                            // Tạo đối tượng Graphics từ hình ảnh
+                            using (Graphics gRotate = Graphics.FromImage(rotatedImage))
+                            {
+                                rotatedImage.RotateFlip(RotateFlipType.Rotate180FlipX);
+                                                                
+                                //gRotate.DrawImage(rotatedImage, new Rectangle(0, 0, area.Width, area.Height), 0, 0, area.Width, area.Height, GraphicsUnit.Pixel);
+                                //gRotate.DrawImage(image, new Rectangle(0, 0, area.Width, area.Height), area.Width, 0, -area.Width, area.Height, GraphicsUnit.Pixel);
+                            }
+
+                            // Vẽ hình ảnh đã Rotate và Flip lên PictureBox
+                            gPaint.DrawImage(rotatedImage, selectRecArea.Location);
+
+                            pictureBox1.Invalidate(selectRecArea);
+                        }
+                    }
+                    if (curSelect == SELECT.FLIP_VERTICAL && cb_rotate.SelectedItem.ToString() == "Flip vertical")
+                    {
+                        Debug.WriteLine("Vô hàm paint của Flip vertical");
+
+                        if (selectRecArea != Rectangle.Empty)
+                        {
+                            // Tạo một hình ảnh mới với kích thước tương ứng
+                            Bitmap rotatedImage = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+
+                            // Tạo đối tượng Graphics từ hình ảnh
+                            using (Graphics gRotate = Graphics.FromImage(rotatedImage))
+                            {
+                                rotatedImage.RotateFlip(RotateFlipType.Rotate180FlipY);
+                            }
+
+                            // Vẽ hình ảnh đã Rotate và Flip lên PictureBox
+                            gPaint.DrawImage(rotatedImage, selectRecArea.Location);
+
+                            pictureBox1.Invalidate(selectRecArea);
+                        }
+                    }
+                    if (curSelect == SELECT.ROTATE_LEFT_90 && cb_rotate.SelectedItem.ToString() == "Rotate left 90")
+                    {
+                        Debug.WriteLine("Vô hàm paint của Rotate left 90");
+
+                        if (selectRecArea != Rectangle.Empty)
+                        {
+                            // Tạo một hình ảnh mới với kích thước tương ứng
+                            Bitmap rotatedImage = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+
+                            // Tạo đối tượng Graphics từ hình ảnh
+                            using (Graphics gRotate = Graphics.FromImage(rotatedImage))
+                            {
+                                rotatedImage.RotateFlip(RotateFlipType.Rotate90FlipX);
+                            }
+
+                            // Vẽ hình ảnh đã Rotate và Flip lên PictureBox
+                            gPaint.DrawImage(rotatedImage, selectRecArea.Location);
+
+                            pictureBox1.Invalidate(selectRecArea);
+                        }
+                    }
+                    if (curSelect == SELECT.ROTATE_RIGHT_90 && cb_rotate.SelectedItem.ToString() == "Rotate right 90")
+                    {
+                        Debug.WriteLine("Vô hàm paint của Rotate right 90");
+
+                        if (selectRecArea != Rectangle.Empty)
+                        {
+                            // Tạo một hình ảnh mới với kích thước tương ứng
+                            Bitmap rotatedImage = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+
+                            // Tạo đối tượng Graphics từ hình ảnh
+                            using (Graphics gRotate = Graphics.FromImage(rotatedImage))
+                            {
+                                rotatedImage.RotateFlip(RotateFlipType.Rotate90FlipY);
+                            }
+
+                            // Vẽ hình ảnh đã Rotate và Flip lên PictureBox
+                            gPaint.DrawImage(rotatedImage, selectRecArea.Location);
+
+                            pictureBox1.Invalidate(selectRecArea);
+                        }
+                    }
+                    if (curSelect == SELECT.ROTATE_180 && cb_rotate.SelectedItem.ToString() == "Rotate 180")
+                    {
+                        Debug.WriteLine("Vô hàm paint của Rotate 180");
+
+                        if (selectRecArea != Rectangle.Empty)
+                        {
+                            // Tạo một hình ảnh mới với kích thước tương ứng
+                            Bitmap rotatedImage = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+
+                            // Tạo đối tượng Graphics từ hình ảnh
+                            using (Graphics gRotate = Graphics.FromImage(rotatedImage))
+                            {
+                                rotatedImage.RotateFlip(RotateFlipType.Rotate90FlipXY);
+                            }
+
+                            // Vẽ hình ảnh đã Rotate và Flip lên PictureBox
+                            gPaint.DrawImage(rotatedImage, selectRecArea.Location);
+
+                            pictureBox1.Invalidate(selectRecArea);
+                        }
+                    }
+                    //Rotate right 90
+                    //Rotate left 90
+                    //Rotate 180
+                    //Flip horizontal
+                    //Flip vertical
+
+                }
+                                
+            }                       
         }
 
         private void DrawText(int x, int y)
@@ -686,7 +969,7 @@ namespace BASICPAINT
             {
                 saveToolStripMenuItem.PerformClick();
             }
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void pb_brush_Click(object sender, EventArgs e)
@@ -701,6 +984,8 @@ namespace BASICPAINT
                 panel_brush.BackColor = activeColor;
             }
             else panel_brush.BackColor = brushes_DefaultColor;
+
+            //isUsingSelect = false;
         }
 
         private void panel_brush_Click(object sender, EventArgs e)
@@ -713,6 +998,8 @@ namespace BASICPAINT
             {
                 curTool = TOOL.BRUSH;
             }
+
+            //isUsingSelect = false;
         }
 
         private void cb_Font_SelectedIndexChanged(object sender, EventArgs e)
@@ -737,6 +1024,233 @@ namespace BASICPAINT
         private void cb_brush_Click(object sender, EventArgs e)
         {
             panel_brush.BackColor = activeColor;
+        }
+
+        private void guna2ImageButton4_Click_1(object sender, EventArgs e)
+        {
+            curTool = TOOL.SELECT;
+            curSelect = SELECT.SELECT_AREA;
+            isUsingSelect = !isUsingSelect;
+
+            panel_brush.BackColor = brushes_DefaultColor;
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            //curTool = TOOL.SELECT;
+        }
+
+        private void button1_Click_3(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_DeleteSelect_Click(object sender, EventArgs e)
+        {
+            //curTool = TOOL.SELECT;
+            //curSelect = SELECT.DELETE;
+            //Rectangle curArea = new Rectangle();
+            //curArea.X = selectRecArea.X - 1;
+            //curArea.Y = selectRecArea.Y - 1;
+
+            //g.FillRectangle(Brushes.White, selectRecArea);
+            //pictureBox1.Invalidate();
+            //pictureBox1.Refresh();
+
+            //panel_brush.BackColor = brushes_DefaultColor;
+            //curSelect = SELECT.DELETE;
+            //curTool = TOOL.SELECT;
+            //isRegionDeleted = true;
+
+            //pictureBox1.Invalidate();
+
+            Debug.WriteLine("Hàm click button delete: ");
+
+            if (!selectRecArea.IsEmpty)
+            {
+                Debug.WriteLine("Có selectArea: " + selectRecArea.ToString());
+                Debug.WriteLine(gPaint.ToString());
+
+                isRegionDeleted = true;
+                curTool = TOOL.SELECT;
+                curSelect = SELECT.DELETE;
+
+                Debug.WriteLine("gPaint KHONG NULL!");
+                Debug.WriteLine("Có selectArea2: " + selectRecArea.ToString());
+                Brush brush = Brushes.White;
+                selectRecArea.Inflate(1, 1);
+                g.FillRectangle(brush, selectRecArea);
+
+
+                //LOG MÀU CỦA VÙNG XEM ĐÃ ĐƯỢC TÔ TRẮNG CHƯA
+                Debug.WriteLine("ĐÃ Tô");
+
+                selectRecArea = Rectangle.Empty;
+
+                Debug.WriteLine("ĐÃ XÓA AREA");
+
+                pictureBox1.Invalidate();
+
+                Debug.WriteLine("ĐÃ INVALIDATE TẠI EVEN CLICK BTN XÓA");
+            }
+        }
+
+        private void cb_rotate_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("VÔ EVENT CLICK CỦA COMBOBOX ROTATE");
+
+            cb_rotate.DroppedDown = !cb_rotate.DroppedDown;
+
+            curTool = TOOL.SELECT;
+
+            //curSelect = SELECT.FLIP_HORIZAONTAL;
+
+            //isUsingSelect = true;
+
+
+            panel_brush.BackColor= brushes_DefaultColor;
+        }
+
+        private void cb_rotate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine("VÔ EVENT SELETCTINDEXCHANGE CỦA COMBOBOX ROTATE");
+            Debug.WriteLine(selectRecArea.ToString());
+
+            //curTool = TOOL.ROTATE;
+            //curSelect = SELECT.FLIP_HORIZAONTAL;
+            //selectRecArea.X = selectRecArea.X + selectRecArea.Width;
+            //selectRecArea.Width = -selectRecArea.Width;
+
+            //g.DrawRectangle(new Pen(Color.Transparent), selectRecArea);
+
+            //  selectedRecAre là biến toàn cục, lưu lại khu vực Rectangle select mà user Paint + MouseUp trước đó
+            if (cb_rotate.SelectedItem.ToString() == "Flip horizontal" && selectRecArea != Rectangle.Empty)
+            {
+                Debug.WriteLine("VÔ HÀM SELETCTINDEXCHANGE với Flip horizontal");
+                curTool = TOOL.SELECT;
+                curSelect = SELECT.FLIP_HORIZAONTAL;
+
+                //Chuyển selectArea sang Image để flip
+                Bitmap image = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+                Graphics gFlip = Graphics.FromImage(image);
+
+                Debug.WriteLine("IMAGE:" + image.Width + " " + image.Height);
+
+                image.RotateFlip(RotateFlipType.Rotate180FlipX);
+                Debug.WriteLine("IMAGE AFTER ROTATE:" + image.Width + " " + image.Height);
+
+                // g là Graphics của PictureBox1
+                g.DrawImage(image, selectRecArea.X, selectRecArea.Y);
+                Debug.WriteLine("AFTER DRAW ROTATED IMAGE");
+
+
+                //if (selectRecArea != Rectangle.Empty)
+                //{
+                //    // Tạo một hình ảnh mới với kích thước tương ứng
+                //    Bitmap rotatedImage = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+
+                //    // Tạo đối tượng Graphics từ hình ảnh
+                //    using (Graphics gRotate = Graphics.FromImage(rotatedImage))
+                //    {
+                //        rotatedImage.RotateFlip(RotateFlipType.Rotate90FlipX);
+
+                //        //gRotate.DrawImage(rotatedImage, new Rectangle(0, 0, area.Width, area.Height), 0, 0, area.Width, area.Height, GraphicsUnit.Pixel);
+                //        //gRotate.DrawImage(image, new Rectangle(0, 0, area.Width, area.Height), area.Width, 0, -area.Width, area.Height, GraphicsUnit.Pixel);
+                //    }
+
+                //    // Vẽ hình ảnh đã Rotate và Flip lên PictureBox
+                //    g.DrawImage(rotatedImage, selectRecArea.Location);
+
+                //    pictureBox1.Invalidate(selectRecArea);
+                //}
+
+                pictureBox1.Invalidate();
+            }
+            if (cb_rotate.SelectedItem.ToString() == "Flip vertical" && selectRecArea != Rectangle.Empty)
+            {
+
+                Debug.WriteLine("VÔ HÀM SELETCTINDEXCHANGE với Flip vertical");
+                curTool = TOOL.SELECT;
+                curSelect = SELECT.FLIP_VERTICAL;
+
+                Bitmap image = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+                Graphics gFlip = Graphics.FromImage(image);
+
+                Debug.WriteLine("IMAGE:" + image.Width + " " + image.Height);
+
+                image.RotateFlip(RotateFlipType.Rotate180FlipY);
+                Debug.WriteLine("IMAGE AFTER ROTATE:" + image.Width + " " + image.Height);
+
+
+                // g là Graphics của PictureBox1
+                g.DrawImage(image, selectRecArea.X, selectRecArea.Y);
+                Debug.WriteLine("AFTER DRAW ROTATED IMAGE");
+
+                pictureBox1.Invalidate();
+            }
+            if (cb_rotate.SelectedItem.ToString() == "Rotate right 90" && selectRecArea != Rectangle.Empty)
+            {
+                Debug.WriteLine("VÔ HÀM SELETCTINDEXCHANGE với Rotate right 90");
+                curTool = TOOL.SELECT;
+                curSelect = SELECT.ROTATE_RIGHT_90;
+
+                Bitmap image = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+                Graphics gFlip = Graphics.FromImage(image);
+
+                Debug.WriteLine("IMAGE:" + image.Width + " " + image.Height);
+
+                image.RotateFlip(RotateFlipType.Rotate90FlipX);
+                Debug.WriteLine("IMAGE AFTER ROTATE:" + image.Width + " " + image.Height);
+
+
+                // g là Graphics của PictureBox1
+                g.DrawImage(image, selectRecArea.X, selectRecArea.Y);
+                Debug.WriteLine("AFTER DRAW ROTATED IMAGE");
+
+                pictureBox1.Invalidate();
+            }
+            if (cb_rotate.SelectedItem.ToString() == "Rotate left 90" && selectRecArea != Rectangle.Empty)
+            {
+                Debug.WriteLine("VÔ HÀM SELETCTINDEXCHANGE với Rotate left 90");
+                curTool = TOOL.SELECT;
+                curSelect = SELECT.ROTATE_LEFT_90;
+
+                Bitmap image = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+                Graphics gFlip = Graphics.FromImage(image);
+
+                Debug.WriteLine("IMAGE:" + image.Width + " " + image.Height);
+
+                image.RotateFlip(RotateFlipType.Rotate90FlipY);
+                Debug.WriteLine("IMAGE AFTER ROTATE:" + image.Width + " " + image.Height);
+
+
+                // g là Graphics của PictureBox1
+                g.DrawImage(image, selectRecArea.X, selectRecArea.Y);
+                Debug.WriteLine("AFTER DRAW ROTATED IMAGE");
+
+                pictureBox1.Invalidate();
+            }
+            if (cb_rotate.SelectedItem.ToString() == "Rotate 180" && selectRecArea != Rectangle.Empty)
+            {
+                Debug.WriteLine("VÔ HÀM SELETCTINDEXCHANGE với Rotate 180");
+                curTool = TOOL.SELECT;
+                curSelect = SELECT.ROTATE_180;
+
+                Bitmap image = new Bitmap(selectRecArea.Width, selectRecArea.Height);
+                Graphics gFlip = Graphics.FromImage(image);
+
+                Debug.WriteLine("IMAGE:" + image.Width + " " + image.Height);
+
+                image.RotateFlip(RotateFlipType.Rotate90FlipXY);
+                Debug.WriteLine("IMAGE AFTER ROTATE:" + image.Width + " " + image.Height);
+
+
+                // g là Graphics của PictureBox1
+                g.DrawImage(image, selectRecArea.X, selectRecArea.Y);
+                Debug.WriteLine("AFTER DRAW ROTATED IMAGE");
+
+                pictureBox1.Invalidate();
+            }
         }
 
         static Point set_Point(PictureBox pb, Point pt)

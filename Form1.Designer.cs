@@ -80,6 +80,7 @@
             this.guna2PictureBox3 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.bt_pencil = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel_select = new Guna.UI2.WinForms.Guna2Panel();
+            this.btn_DeleteSelect = new System.Windows.Forms.Button();
             this.cb_rotate = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2ImageButton4 = new Guna.UI2.WinForms.Guna2ImageButton();
@@ -136,7 +137,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1286, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1286, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -300,7 +301,7 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 28);
+            this.panel_chung.Location = new System.Drawing.Point(0, 30);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1286, 107);
             this.panel_chung.TabIndex = 6;
@@ -447,7 +448,6 @@
             this.label2.Size = new System.Drawing.Size(45, 16);
             this.label2.TabIndex = 6;
             this.label2.Text = "Image";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // panel_size
             // 
@@ -471,7 +471,6 @@
             this.pic_color.Size = new System.Drawing.Size(40, 40);
             this.pic_color.TabIndex = 3;
             this.pic_color.TabStop = false;
-            this.pic_color.Click += new System.EventHandler(this.guna2PictureBox2_Click_1);
             // 
             // bt_size_plus
             // 
@@ -525,7 +524,6 @@
             this.panel_shape.Name = "panel_shape";
             this.panel_shape.Size = new System.Drawing.Size(202, 82);
             this.panel_shape.TabIndex = 4;
-            this.panel_shape.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_shape_Paint);
             // 
             // panel_shape_sub
             // 
@@ -734,6 +732,7 @@
             // 
             this.panel_select.BorderColor = System.Drawing.Color.Gainsboro;
             this.panel_select.BorderThickness = 1;
+            this.panel_select.Controls.Add(this.btn_DeleteSelect);
             this.panel_select.Controls.Add(this.cb_rotate);
             this.panel_select.Controls.Add(this.label6);
             this.panel_select.Controls.Add(this.guna2ImageButton4);
@@ -741,6 +740,19 @@
             this.panel_select.Name = "panel_select";
             this.panel_select.Size = new System.Drawing.Size(130, 81);
             this.panel_select.TabIndex = 1;
+            // 
+            // btn_DeleteSelect
+            // 
+            this.btn_DeleteSelect.BackColor = System.Drawing.SystemColors.Window;
+            this.btn_DeleteSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_DeleteSelect.ForeColor = System.Drawing.Color.Black;
+            this.btn_DeleteSelect.Location = new System.Drawing.Point(54, 21);
+            this.btn_DeleteSelect.Name = "btn_DeleteSelect";
+            this.btn_DeleteSelect.Size = new System.Drawing.Size(68, 23);
+            this.btn_DeleteSelect.TabIndex = 3;
+            this.btn_DeleteSelect.Text = "Delete";
+            this.btn_DeleteSelect.UseVisualStyleBackColor = false;
+            this.btn_DeleteSelect.Click += new System.EventHandler(this.btn_DeleteSelect_Click);
             // 
             // cb_rotate
             // 
@@ -757,6 +769,8 @@
             this.cb_rotate.Size = new System.Drawing.Size(68, 24);
             this.cb_rotate.TabIndex = 2;
             this.cb_rotate.Text = "Rotate";
+            this.cb_rotate.SelectedIndexChanged += new System.EventHandler(this.cb_rotate_SelectedIndexChanged);
+            this.cb_rotate.Click += new System.EventHandler(this.cb_rotate_Click);
             // 
             // label6
             // 
@@ -768,6 +782,7 @@
             this.label6.Size = new System.Drawing.Size(45, 16);
             this.label6.TabIndex = 1;
             this.label6.Text = "Select";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // guna2ImageButton4
             // 
@@ -782,6 +797,7 @@
             this.guna2ImageButton4.PressedState.ImageSize = new System.Drawing.Size(64, 64);
             this.guna2ImageButton4.Size = new System.Drawing.Size(45, 35);
             this.guna2ImageButton4.TabIndex = 0;
+            this.guna2ImageButton4.Click += new System.EventHandler(this.guna2ImageButton4_Click_1);
             // 
             // panel_color_picker
             // 
@@ -988,6 +1004,7 @@
         private System.Windows.Forms.ComboBox cb_Font;
         private System.Windows.Forms.RichTextBox richTB_text;
         private System.Windows.Forms.Button btn_underline;
+        private System.Windows.Forms.Button btn_DeleteSelect;
     }
 }
 
