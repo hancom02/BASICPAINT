@@ -81,7 +81,6 @@
             this.bt_pencil = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel_select = new Guna.UI2.WinForms.Guna2Panel();
             this.btn_DeleteSelect = new System.Windows.Forms.Button();
-            this.cb_rotate = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.guna2ImageButton4 = new Guna.UI2.WinForms.Guna2ImageButton();
             this.panel_color_picker = new Guna.UI2.WinForms.Guna2Panel();
@@ -131,13 +130,14 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1286, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1286, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -149,34 +149,34 @@
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -223,7 +223,7 @@
             this.trackBarZoom.Maximum = 200;
             this.trackBarZoom.Minimum = 100;
             this.trackBarZoom.Name = "trackBarZoom";
-            this.trackBarZoom.Size = new System.Drawing.Size(131, 56);
+            this.trackBarZoom.Size = new System.Drawing.Size(131, 69);
             this.trackBarZoom.TabIndex = 0;
             this.trackBarZoom.Value = 100;
             this.trackBarZoom.Scroll += new System.EventHandler(this.trackBarZoom_Scroll);
@@ -235,7 +235,7 @@
             this.labelZoomPercent.ForeColor = System.Drawing.Color.Black;
             this.labelZoomPercent.Location = new System.Drawing.Point(35, 8);
             this.labelZoomPercent.Name = "labelZoomPercent";
-            this.labelZoomPercent.Size = new System.Drawing.Size(45, 18);
+            this.labelZoomPercent.Size = new System.Drawing.Size(56, 22);
             this.labelZoomPercent.TabIndex = 3;
             this.labelZoomPercent.Text = "100%";
             // 
@@ -265,7 +265,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(39, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 16);
+            this.label1.Size = new System.Drawing.Size(96, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "1222 x 1222";
             // 
@@ -301,7 +301,7 @@
             this.panel_chung.Controls.Add(this.panel_select);
             this.panel_chung.Controls.Add(this.panel_color_picker);
             this.panel_chung.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel_chung.Location = new System.Drawing.Point(0, 30);
+            this.panel_chung.Location = new System.Drawing.Point(0, 33);
             this.panel_chung.Name = "panel_chung";
             this.panel_chung.Size = new System.Drawing.Size(1286, 107);
             this.panel_chung.TabIndex = 6;
@@ -389,7 +389,7 @@
             "72"});
             this.cb_TextSize.Location = new System.Drawing.Point(102, 39);
             this.cb_TextSize.Name = "cb_TextSize";
-            this.cb_TextSize.Size = new System.Drawing.Size(47, 24);
+            this.cb_TextSize.Size = new System.Drawing.Size(47, 28);
             this.cb_TextSize.TabIndex = 1;
             this.cb_TextSize.Text = "11";
             this.cb_TextSize.SelectedIndexChanged += new System.EventHandler(this.cb_TextSize_SelectedIndexChanged);
@@ -400,7 +400,7 @@
             this.cb_Font.FormattingEnabled = true;
             this.cb_Font.Location = new System.Drawing.Point(3, 9);
             this.cb_Font.Name = "cb_Font";
-            this.cb_Font.Size = new System.Drawing.Size(146, 24);
+            this.cb_Font.Size = new System.Drawing.Size(146, 28);
             this.cb_Font.TabIndex = 0;
             this.cb_Font.Text = "Select Font";
             this.cb_Font.SelectedIndexChanged += new System.EventHandler(this.cb_Font_SelectedIndexChanged);
@@ -412,7 +412,7 @@
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(733, 89);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 16);
+            this.label5.Size = new System.Drawing.Size(54, 20);
             this.label5.TabIndex = 9;
             this.label5.Text = "Colors";
             // 
@@ -423,7 +423,7 @@
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(394, 89);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 16);
+            this.label4.Size = new System.Drawing.Size(64, 20);
             this.label4.TabIndex = 8;
             this.label4.Text = "Shapes";
             // 
@@ -434,7 +434,7 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(168, 89);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 16);
+            this.label3.Size = new System.Drawing.Size(47, 20);
             this.label3.TabIndex = 7;
             this.label3.Text = "Tools";
             // 
@@ -445,7 +445,7 @@
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(33, 89);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 16);
+            this.label2.Size = new System.Drawing.Size(54, 20);
             this.label2.TabIndex = 6;
             this.label2.Text = "Image";
             // 
@@ -626,7 +626,7 @@
             "Water color"});
             this.cb_brush.Location = new System.Drawing.Point(3, 52);
             this.cb_brush.Name = "cb_brush";
-            this.cb_brush.Size = new System.Drawing.Size(64, 24);
+            this.cb_brush.Size = new System.Drawing.Size(64, 28);
             this.cb_brush.TabIndex = 2;
             this.cb_brush.Text = "Brush";
             this.cb_brush.SelectedIndexChanged += new System.EventHandler(this.cb_brush_SelectedIndexChanged);
@@ -733,7 +733,6 @@
             this.panel_select.BorderColor = System.Drawing.Color.Gainsboro;
             this.panel_select.BorderThickness = 1;
             this.panel_select.Controls.Add(this.btn_DeleteSelect);
-            this.panel_select.Controls.Add(this.cb_rotate);
             this.panel_select.Controls.Add(this.label6);
             this.panel_select.Controls.Add(this.guna2ImageButton4);
             this.panel_select.Location = new System.Drawing.Point(2, 0);
@@ -754,24 +753,6 @@
             this.btn_DeleteSelect.UseVisualStyleBackColor = false;
             this.btn_DeleteSelect.Click += new System.EventHandler(this.btn_DeleteSelect_Click);
             // 
-            // cb_rotate
-            // 
-            this.cb_rotate.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_rotate.FormattingEnabled = true;
-            this.cb_rotate.Items.AddRange(new object[] {
-            "Rotate right 90",
-            "Rotate left 90",
-            "Rotate 180",
-            "Flip horizontal",
-            "Flip vertical"});
-            this.cb_rotate.Location = new System.Drawing.Point(54, 52);
-            this.cb_rotate.Name = "cb_rotate";
-            this.cb_rotate.Size = new System.Drawing.Size(68, 24);
-            this.cb_rotate.TabIndex = 2;
-            this.cb_rotate.Text = "Rotate";
-            this.cb_rotate.SelectedIndexChanged += new System.EventHandler(this.cb_rotate_SelectedIndexChanged);
-            this.cb_rotate.Click += new System.EventHandler(this.cb_rotate_Click);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -779,7 +760,7 @@
             this.label6.ForeColor = System.Drawing.Color.Black;
             this.label6.Location = new System.Drawing.Point(3, 49);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 16);
+            this.label6.Size = new System.Drawing.Size(54, 20);
             this.label6.TabIndex = 1;
             this.label6.Text = "Select";
             this.label6.Click += new System.EventHandler(this.label6_Click);
@@ -819,7 +800,7 @@
             this.lb_editecolor_2.ForeColor = System.Drawing.Color.Black;
             this.lb_editecolor_2.Location = new System.Drawing.Point(249, 60);
             this.lb_editecolor_2.Name = "lb_editecolor_2";
-            this.lb_editecolor_2.Size = new System.Drawing.Size(44, 16);
+            this.lb_editecolor_2.Size = new System.Drawing.Size(51, 20);
             this.lb_editecolor_2.TabIndex = 3;
             this.lb_editecolor_2.Text = "colors";
             // 
@@ -830,7 +811,7 @@
             this.lb_edit_colors.ForeColor = System.Drawing.Color.Black;
             this.lb_edit_colors.Location = new System.Drawing.Point(249, 47);
             this.lb_edit_colors.Name = "lb_edit_colors";
-            this.lb_edit_colors.Size = new System.Drawing.Size(30, 16);
+            this.lb_edit_colors.Size = new System.Drawing.Size(37, 20);
             this.lb_edit_colors.TabIndex = 2;
             this.lb_edit_colors.Text = "Edit";
             this.lb_edit_colors.Click += new System.EventHandler(this.lb_edit_colors_Click);
@@ -889,7 +870,7 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1286, 566);
@@ -993,7 +974,6 @@
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.FontDialog fontDialog2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ComboBox cb_rotate;
         private Guna.UI2.WinForms.Guna2PictureBox pb_brush;
         private System.Windows.Forms.ComboBox cb_brush;
         private System.Windows.Forms.Panel panel1;
